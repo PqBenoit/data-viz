@@ -4,11 +4,29 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Twit = require('twit');
+
+
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+var tweets = new Twit({
+    consumer_key: "cF5FxBX1JhEmCQEwekAod418B",
+    consumer_secret: "oQ5JqmGSFplcwDVpIkp70cCunh2Yau45xg5irWShERnDHF3bbQ",
+    access_token: "197456610-j7xXG6NAzBOHDKpgrbx3E8VCcFXbIDyhCykAEQ04",
+    access_token_secret: "Kl10ibVfW6ltuO1Y33WA0IWKiqCcrhNYiuojMSfJYs9KX"
+});
+
+var paris = ["2.25", "48.81", "2.41", "48.9"];
+var stream = tweets.stream('statuses/filter', { locations: paris });
+
+stream.on('tweet', function (tweet) {
+  console.log(tweet);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
