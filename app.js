@@ -5,8 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var Twit = require('twit');
-
-
+var geocoder = require('geocoder');
 
 
 var routes = require('./routes/index');
@@ -15,17 +14,20 @@ var users = require('./routes/users');
 var app = express();
 
 var tweets = new Twit({
-    consumer_key: "cF5FxBX1JhEmCQEwekAod418B",
-    consumer_secret: "oQ5JqmGSFplcwDVpIkp70cCunh2Yau45xg5irWShERnDHF3bbQ",
-    access_token: "197456610-j7xXG6NAzBOHDKpgrbx3E8VCcFXbIDyhCykAEQ04",
-    access_token_secret: "Kl10ibVfW6ltuO1Y33WA0IWKiqCcrhNYiuojMSfJYs9KX"
+	consumer_key: "pncTvmlzl8ARPmUcQTSHEzXez",
+	consumer_secret: "pPAIV4ynh3qbKNRIg5YeR6831FZIF4WJXfoJUU0RNe8esO1GJn",
+	access_token: "847509511-oroeKcoKDg0imxW9fIrwcVa25u3WOgVOaI6oOH4a",
+	access_token_secret: "CbVzjS1I1sNCWCe8N6JLNe8BZDcbcvYauqOs8udbZJgfb"
 });
 
 var paris = ["2.25", "48.81", "2.41", "48.9"];
 var stream = tweets.stream('statuses/filter', { locations: paris });
 
 stream.on('tweet', function (tweet) {
-  console.log(tweet);
+	// geocoder.reverseGeocode( tweet.place.bounding_box.coordinates, function ( err, data ) {
+  		// console.log(tweet.place.bounding_box.coordinates[0]);
+	// });
+	console.log(tweet.geo);
 });
 
 // view engine setup
@@ -45,9 +47,9 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handlers
@@ -55,23 +57,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
+	app.use(function(err, req, res, next) {
+		res.status(err.status || 500);
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
+	});
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: {}
+	});
 });
 
 
