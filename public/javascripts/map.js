@@ -1,5 +1,5 @@
 // ValeurConteneurCherchée = ( MaxConteneur * (ValeurRéelleDonnée - MinRéel) )  /  (MaxRéel - MinRéel)
-var ee = require('event-emitter');
+
 $(document).ready(function(){
   var wWidth = ($(window).width()-15);
 	var wHeight = ($(window).height()-15);
@@ -7,13 +7,12 @@ $(document).ready(function(){
 	$('#map').css('width', wWidth+'px');
 	$('#map').css('height', wHeight+'px');
 
-  var location = function(rsr, lon, lat) {
+  var getPixelPosition = function(rsr, lon, lat) {
     var paths = $('path');
 
     var maxLeft = 0;
     var minLeft = 10000000;
     var maxHeight = 0;
-    var minHeight = 0;
 
     var minLat = 48.815778999;
     var maxLat = 48.9014562785;
@@ -35,23 +34,10 @@ $(document).ready(function(){
     var widthSvg = (maxLeft - minLeft);
     var ratio = (widthSvg/2037.566);
 
-    var posLon = ( ((maxLeft - minLeft)) * (2.3476886 - minLon) / (maxLon - minLon) );
-    var posLat = ( (maxHeight) * (48.8545851 - minLat) /  (maxLat - minLat) );
+    var posLon = ( (((maxLeft - minLeft)) * (lon - minLon) / (maxLon - minLon))/ratio );
+    var posLat = ( (maxHeight-((maxHeight) * (lat - minLat) /  (maxLat - minLat)))/ratio );
 
-    var circle = rsr.circle((posLon/ratio), ((maxHeight-posLat)/ratio), 10);
-    circle.attr('fill', '#000');
-
-    var posLon2 = ( ((maxLeft - minLeft)) * (2.3649406 - minLon) / (maxLon - minLon) );
-    var posLat2 = ( (maxHeight) * (48.8680242 - minLat) /  (maxLat - minLat) );
-
-    var circle2 = rsr.circle((posLon2/ratio), ((maxHeight-posLat2)/ratio), 10);
-    circle2.attr('fill', '#ccc');
-
-    console.log(widthSvg);
-    console.log(ratio);
-
-    console.log((posLon/ratio));
-    console.log((posLat/ratio));
+    return {x:posLon,y:posLat};
   };
 
   var rsr = Raphael('map', '100%', '100%');
@@ -102,7 +88,10 @@ $(document).ready(function(){
   rsr.setViewBox(0, 0, '2037.566', '1615.5' );
 	rsr.canvas.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
-  location(rsr);
+  var pos = getPixelPosition(rsr, 2.3476886, 48.8545851);
+
+  var circle = rsr.circle(pos.x, pos.y, 10);
+  circle.attr('fill', '#000');
 
   $(window).resize(function(){
     wWidth = ($(window).width()-15);
