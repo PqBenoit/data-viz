@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var Twit = require('twit');
 
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var tweet = require('./routes/tweets');
 
 var app = express();
 
@@ -23,10 +23,7 @@ var paris = ["2.25", "48.81", "2.41", "48.9"];
 var stream = tweets.stream('statuses/filter', { locations: paris });
 
 stream.on('tweet', function (tweet) {
-	// geocoder.reverseGeocode( tweet.place.bounding_box.coordinates, function ( err, data ) {
-  		// console.log(tweet.place.bounding_box.coordinates[0]);
-	// });
-	console.log(tweet.geo);
+	console.log(tweet.user.name+': '+tweet.text);
 });
 
 // view engine setup
@@ -43,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/tweets', tweet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
