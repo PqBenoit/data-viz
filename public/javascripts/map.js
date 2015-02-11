@@ -1,13 +1,31 @@
 // ValeurConteneurCherchée = ( MaxConteneur * (ValeurRéelleDonnée - MinRéel) )  /  (MaxRéel - MinRéel)
 
 $(document).ready(function(){
-  var wWidth = ($(window).width()-15);
-	var wHeight = ($(window).height()-15);
 
-	$('#map').css('width', wWidth+'px');
-	$('#map').css('height', wHeight+'px');
+  /**
+   * Set map size from window size
+   * @return void
+   */
+  var setSize = function ()
+  {
+    var wWidth = ($(window).width()-15);
+    var wHeight = ($(window).height()-15);
 
-  var getPixelPosition = function(rsr, lon, lat) {
+    $('#map').css('width', wWidth+'px');
+    $('#map').css('height', wHeight+'px');
+  };
+
+  /**
+   * Calc position x and y from lon and lat
+   *
+   * @param Raphael rsr
+   * @param float lon
+   * @param float lat
+   *
+   * @return Object
+   */
+  var getPixelPosition = function(rsr, lon, lat) 
+  {
     var paths = $('path');
 
     var maxLeft = 0;
@@ -39,6 +57,8 @@ $(document).ready(function(){
 
     return {x:posLon,y:posLat};
   };
+
+  setSize();
 
   var rsr = Raphael('map', '100%', '100%');
   var group_a = rsr.set(); group_a.attr({'name': 'group_a'}); 
@@ -94,9 +114,6 @@ $(document).ready(function(){
   circle.attr('fill', '#000');
 
   $(window).resize(function(){
-    wWidth = ($(window).width()-15);
-		wHeight = ($(window).height()-15);
-  	$('#map').css('width', wWidth+'px');
-		$('#map').css('height', wHeight+'px');
+    setSize();
   });
 });
