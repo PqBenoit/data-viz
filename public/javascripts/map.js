@@ -31,6 +31,7 @@ $(document).ready(function(){
     var maxLeft = 0;
     var minLeft = 10000000;
     var maxHeight = 0;
+    var minHeight = 10000000;
 
     var minLat = 48.815778999;
     var maxLat = 48.9014562785;
@@ -47,13 +48,16 @@ $(document).ready(function(){
       if (maxHeight < ($(paths[i]).offset().top+paths[i].getBoundingClientRect().height)) {
         maxHeight = ($(paths[i]).offset().top+paths[i].getBoundingClientRect().height);
       }
+      if (minHeight > $(paths[i]).offset().top) {
+        minHeight = $(paths[i]).offset().top;
+      }
     }
 
     var widthSvg = (maxLeft - minLeft);
     var ratio = (widthSvg/2037.566);
 
-    var posLon = ( (((maxLeft - minLeft)) * (lon - minLon) / (maxLon - minLon))/ratio );
-    var posLat = ( (maxHeight-((maxHeight) * (lat - minLat) /  (maxLat - minLat)))/ratio );
+    var posLon = ( ( (maxLeft - minLeft) * (lon - minLon) / (maxLon - minLon) )/ratio );
+    var posLat = ( ( (maxHeight-minHeight)-((maxHeight - minHeight) * (lat - minLat) /  (maxLat - minLat)))/ratio );
 
     return {x:posLon,y:posLat};
   };
