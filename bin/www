@@ -34,6 +34,13 @@ var stream = tweets.stream('statuses/filter', { locations: paris });
 
 var io = require('socket.io')(server);
 
+// io.on('connection', function(socket){
+//   socket.emit('tweet', { hello: 'hello' });
+// });
+stream.on('tweet', function (tweet){
+  console.log('smoifhesmofhsmoh', tweet.text);
+});
+
 io.on('connection', function(socket){
   console.log('connected on socket');
   stream.on('tweet', function (tweet){
