@@ -15,12 +15,32 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+
 /**
  * Create HTTP server.
  */
-
 var server = http.createServer(app);
 
+var Twit = require('twit');
+var tweets = new Twit({
+  consumer_key: "pncTvmlzl8ARPmUcQTSHEzXez",
+  consumer_secret: "pPAIV4ynh3qbKNRIg5YeR6831FZIF4WJXfoJUU0RNe8esO1GJn",
+  access_token: "847509511-oroeKcoKDg0imxW9fIrwcVa25u3WOgVOaI6oOH4a",
+  access_token_secret: "CbVzjS1I1sNCWCe8N6JLNe8BZDcbcvYauqOs8udbZJgfb"
+});
+
+var paris = ["2.25", "48.81", "2.41", "48.9"];
+var stream = tweets.stream('statuses/filter', { locations: paris });
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket){
+  console.log('connected on socket');
+  stream.on('tweet', function (tweet){
+    console.log(tweet.text);
+    socket.emit('tweet', { hello: tweet });
+  });
+});
 /**
  * Listen on provided port, on all network interfaces.
  */

@@ -114,9 +114,16 @@ $(document).ready(function(){
 
   var pos = getPixelPosition(rsr, 2.3476886, 48.8545851);
 
-  var circle = rsr.circle(pos.x, pos.y, 3);
-  circle.attr('fill', '#4099FF');
-  circle.attr('stroke', 'none');
+  
+  // var socket = io.connect('http://localhost:3000');
+  // socket.on('tweet', function(data){
+  //   console.log('getting tweeeeeeeets');
+  //     // var pos = getPixelPosition(rsr, data.coordinates[0], data.coordinates[1]);
+  //     // var circle = rsr.circle(pos.x, pos.y, 5);
+  //     // circle.attr('fill', '#4099FF');
+  //     // circle.attr('stroke', 'none');
+  //     console.log(data);
+  // });
   
   $(window).resize(function(){
     setSize();
