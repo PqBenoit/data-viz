@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var Twit = require('twit');
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -23,6 +23,7 @@ app.port = normalizePort(process.env.PORT || '3000');
 */
 app.server = http.createServer(app);
 var io = require('socket.io')(app.server);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
