@@ -106,14 +106,11 @@ var Map = (function(my, Config, $){
   };
 
   my.init = function(){
-    $(document).ready(function() {
       console.log('init Map Module');
       my.setSize();
       my.resizeEvent();
       my.initRaphael();
-    });
   };
-
 
   return my;
 }(Map || {}, Config || {}, jQuery));

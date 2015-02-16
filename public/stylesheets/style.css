@@ -58,16 +58,6 @@ table {
     animation-timing-function: ease-out;
     animation-duration: 1.5s;
 
-    /*-webkit-animation-name: mapAnimZ;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-in;
-    -webkit-animation-duration: 1.5s;
-
-    animation-name: mapAnimZ;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 1.5s;*/
-
     -webkit-transform: rotateX(60deg);
     transform: rotateX(60deg);
 }
@@ -105,19 +95,16 @@ table {
     }
 }
 
-@-webkit-keyframes mapAnimZ {
-    0% {
-        -webkit-transform: rotateZ(0deg);
-    }
-    100% {
-        -webkit-transform: rotateZ(10deg);
-    }
+#map circle {
+    transform: translateY(420px);
+    -webkit-transform: translateY(420px);
+    cursor: pointer;
 }
-@keyframes mapAnimZ {
-    0% {
-        transform: rotateZ(0deg);
-    }
-    100% {
-        transform: rotateZ(10deg);
-    }
+
+.tweetPopup {
+    background: rgba(255,255,255,0.8);
+    color: #333333;
+    border: 1px solid #CCC;
+    width: 200px;
+    height: 200px;
 }
