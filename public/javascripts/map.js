@@ -1,4 +1,3 @@
-
 /**
  * @param Map my
  * @param Config Config
@@ -30,7 +29,7 @@ var Map = (function(my, Config, $){
    *
    * @return Object
    */
-  my.getPixelPosition = function(rsr, lon, lat){
+  my.getPixelPosition = function (rsr, lon, lat){
     var paths = $('path');
 
     var maxLeft = 0;
@@ -66,12 +65,17 @@ var Map = (function(my, Config, $){
   * Resize event for map module
   * @return void
   */
-  my.resizeEvent = function(){
+  my.resizeEvent = function (){
     $(window).resize(function(){
       my.setSize();
     });
   };
 
+  /**
+  * Init raphaeljs lib with path for Paris
+  * @see Config
+  * @return void
+  */
   my.initRaphael = function(){
     my.rsr = Raphael('map', '100%', '100%');
     var group_a = my.rsr.set(); group_a.attr({'name': 'group_a'}); 
@@ -105,7 +109,11 @@ var Map = (function(my, Config, $){
     my.rsr.canvas.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   };
 
-  my.init = function(){
+  /**
+  * Init Map module
+  * @return void
+  */
+  my.init = function (){
       console.log('init Map Module');
       my.setSize();
       my.resizeEvent();

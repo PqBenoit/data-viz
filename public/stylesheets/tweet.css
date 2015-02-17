@@ -59,29 +59,72 @@
     cursor: pointer;
 }
 
-.tweetSlide {
-    background: #333333;
-    color: #FFFFFF;
-    width: 20%;
+.tweet-slide {
+    background: #2C3E50;
+    color: #BDC3C7;
+    width: 250px;
     height: 100%;
     position: absolute;
     top: 0;
     right: 0;
-    padding: 10px;
-}   .fa {
+}  
+    .tweet-slide h1 {
+        margin: 26px 10px 0 0;
+        text-align: right;
+    }
+    .tweet-slide h2 {
+        margin: 25px 10px 25px 0;
+        text-align: right;
+    } 
+
+    .tweet-slide .fa {
         cursor: pointer;
-        float: right;
-        margin: 10px 10px 10px 0;
+        float: left;
+        margin: 25px 0 25px 10px;
         font-size: 1.2em;
     }
-    .tweet-content {
+
+    .tweet-slide .tweet-content {
         clear: both;
-    }   .tweet-content h2 {
-            border-bottom: 1px solid #454545;
+        background: #3498DB;
+    }   
+        .tweet-slide .tweet-content h2 {
+            height: 2em;
+            line-height: 2em;
+            font-size: 1.1em; 
+            padding: 0 10px 0 10px;
+            margin: 0;
+            text-align: left;
+            color: #E4F1FE;
+        }   
+            .tweet-slide .tweet-content h2 a {
+                color: #E4F1FE;
+                text-decoration: underline;
+            }
+
+        .tweet-slide .tweet-content p {
+            background: #FFFFFF;
+            color: #22313F;
+            padding: 10px;
+        }
+
+    .tweet-slide .tweet-timeline {
+        background: none;
+    }   
+        .tweet-slide .tweet-timeline h2 {
+            border-bottom: 1px solid #3498DB;
             padding-bottom: 10px;
             margin-bottom: 10px;
-        }   a {
-                font-size: 1.3em; 
-                color: #FFFFFF;
-                text-decoration: none;
+            padding: 0 10px 0 10px;
+            margin: 0;
+            text-align: left;
+        }   
+            .tweet-slide .tweet-timeline h2 a {
+                font-size: 1em; 
+                color: #000000;
+                text-decoration: underline;
             }
+
+        .tweet-slide .tweet-timeline p {
+            padding: 10px;
+        }
