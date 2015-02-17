@@ -19,7 +19,7 @@ module.exports = function (io)
 		var stream = tweets.stream('statuses/filter', { locations: paris });
 		
 		stream.on('tweet', function (tweet){
-			io.emit('tweet', { tweet: tweet });
+			io.sockets.emit('tweet', { tweet: tweet });
 		});
 
 	  	res.status('200').render('tweets/index');

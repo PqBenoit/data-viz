@@ -3,57 +3,39 @@ extends ../layout
 block content
 	script(src='/javascripts/raphael.js')
 	script(src='https://cdn.socket.io/socket.io-1.3.3.js')
-	div(id=container)
+	section(id="container", class="tweets")
 		div(id="map")
-		div(class="tweetPopup")
+		aside(class="tweetSlide")
+			i(class="fa fa-angle-double-right")
+			div(class="tweet-content")
 	script(src='/javascripts/map.js')
+	script(src='/javascripts/aside.js')
 	script(type='text/javascript').
 		$(document).ready(function() {
+
+			Aside.init();
 			Map.init();
 
 			var socket = io.connect('http://localhost:3000');
-			
-			var Popup = {
-				open: function (posLeft, posTop, data)
-				{
-					var content = "<a href='https://twitter.com/"+data.tweet.user.screen_name+"'>@"+data.tweet.user.screen_name+"</a> a tweeté: "+data.tweet.text;
-					var popup = $('.tweetPopup');
-
-					popup.css('position', 'absolute');
-					popup.css('top', (posTop-30)+'px');
-					popup.css('left', (posLeft+30)+'px');
-
-					popup.html(content);
-
-					popup.fadeIn();
-				},
-				close: function ()
-				{
-					var popup = $('.tweetPopup');
-					if (popup.css('display')=='block') {
-						popup.fadeOut();
-					}
-				}
-			}
 
 			socket.on('tweet', function(data){
 				var circle = undefined;
 
 				if (null!=data.tweet.coordinates) {
 					var pos = Map.getPixelPosition(Map.rsr, data.tweet.coordinates.coordinates[0], data.tweet.coordinates.coordinates[1]);
-					
+					console.log(data.tweet.coordinates.coordinates);
 					circle = Map.rsr.circle(pos.x, pos.y, 10);
 					circle.attr('fill', '#4099FF');
 					circle.attr('stroke', 'none');
 					
 					$(circle.node).click(function(){
-						Popup.open($(this).offset().left, $(this).offset().top, data);
+						Aside.open($(this).offset().left, $(this).offset().top, data);
 					});
 				}
 			});
 
-			$('.fa-close').click(function(){
-				Popup.close();
+			$('.fa-angle-double-right').click(function(){
+				Aside.close();
 			});
 
 		});

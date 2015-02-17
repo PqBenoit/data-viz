@@ -1,0 +1,87 @@
+#container.tweets {
+    height: 100%;
+}
+/*#map {
+    -webkit-animation-name: mapAnimX;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-duration: 1.5s;
+
+    animation-name: mapAnimX;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 1.5s;
+
+    -webkit-transform: rotateX(60deg);
+    transform: rotateX(60deg);
+}
+
+@-webkit-keyframes mapAnimX {
+    0% {
+    	opacity: 0;
+        -webkit-transform: rotateX(0deg);
+    }
+    25% {
+    	opacity: 0;
+    }
+    60% {
+    	opacity: 0.4;
+    }
+    100% {
+    	opacity: 1;
+        -webkit-transform: rotateX(60deg);
+    }
+}
+@keyframes mapAnimX {
+    0% {
+    	opacity: 0;
+        transform: rotateX(0deg);
+    }
+    25% {
+    	opacity: 0;
+    }
+    60% {
+    	opacity: 0.4;
+    }
+    100% {
+    	opacity: 1;
+        transform: rotateX(60deg);
+    }
+}
+
+#map circle {
+    transform: translateY(420px);
+    -webkit-transform: translateY(420px);
+    cursor: pointer;
+}*/
+
+#map circle {
+    cursor: pointer;
+}
+
+.tweetSlide {
+    background: #333333;
+    color: #FFFFFF;
+    width: 20%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}   .fa {
+        cursor: pointer;
+        float: right;
+        margin: 10px 10px 10px 0;
+        font-size: 1.2em;
+    }
+    .tweet-content {
+        clear: both;
+    }   .tweet-content h2 {
+            border-bottom: 1px solid #454545;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }   a {
+                font-size: 1.3em; 
+                color: #FFFFFF;
+                text-decoration: none;
+            }
