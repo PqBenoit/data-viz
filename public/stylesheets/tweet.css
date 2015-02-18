@@ -61,60 +61,69 @@
 
 .tweet-slide {
     background: #2C3E50;
-    color: #BDC3C7;
+    color: #FFFFFF;
     width: 250px;
     height: 100%;
     position: absolute;
     top: 0;
     right: 0;
+    overflow: hidden;
 }  
     .tweet-slide h1 {
-        margin: 26px 10px 0 0;
+        padding: 26px 10px 0 0;
         text-align: right;
+        min-width: 250px;
     }
     .tweet-slide h2 {
-        margin: 25px 10px 25px 0;
+        padding: 25px 10px 25px 0;
         text-align: right;
+        min-width: 250px;
     } 
-
     .tweet-slide .fa {
         cursor: pointer;
-        float: left;
-        margin: 25px 0 25px 10px;
         font-size: 1.2em;
+    }
+    .tweet-slide .timeline-button {
+        cursor: pointer;
+    }
+    .tweet-slide .fa-close {
+        float: left;
+        margin: 15px 0 25px 10px;
     }
 
     .tweet-slide .tweet-content {
         clear: both;
-        background: #3498DB;
-    }   
+        text-align: center;
+        min-width: 250px;
+    }   .tweet-slide .tweet-content img {
+            border-radius: 25px;
+        }   
         .tweet-slide .tweet-content h2 {
-            height: 2em;
-            line-height: 2em;
+            min-height: 3.5em;
+            line-height: 3.5em;
             font-size: 1.1em; 
             padding: 0 10px 0 10px;
             margin: 0;
-            text-align: left;
-            color: #E4F1FE;
+            text-align: center;
+            color: #FFFFFF;
         }   
             .tweet-slide .tweet-content h2 a {
-                color: #E4F1FE;
+                color: #FFFFFF;
                 text-decoration: underline;
             }
 
         .tweet-slide .tweet-content p {
-            background: #FFFFFF;
-            color: #22313F;
-            padding: 10px;
+            background: #34495E;
+            color: #FFFFFF;
+            text-align: justify;
+            padding: 20px 10px 20px 10px;
         }
 
     .tweet-slide .tweet-timeline {
         background: none;
+        min-width: 250px;
     }   
         .tweet-slide .tweet-timeline h2 {
-            border-bottom: 1px solid #3498DB;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
             padding: 0 10px 0 10px;
             margin: 0;
             text-align: left;

@@ -59,4 +59,4 @@ var Tweet = (function(my, Map, io, Sidebar, $)
 
 
 	return my;
-}(Tweet || {}, Map || {}, socket || {}, Sidebar || {}, jQuery));
+}(Tweet || {}, Map || {}, io || {}, Sidebar || {}, jQuery));

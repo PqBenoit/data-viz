@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -22,8 +21,6 @@ app.port = normalizePort(process.env.PORT || '3000');
 * Create HTTP server.
 */
 app.server = http.createServer(app);
-var io = require('socket.io')(app.server);
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-var tweet = require('./routes/tweets')(io);
+var tweet = require('./routes/tweets')(app.server);
 app.use('/tweets', tweet);
 
 // catch 404 and forward to error handler

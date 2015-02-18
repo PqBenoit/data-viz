@@ -8,10 +8,12 @@ var Sidebar = (function(my, io, $){
 	my.sidebar 			= $('.tweet-slide');
 	my.sidebarContent 	= $('.tweet-slide .tweet-content');
 	my.sidebarTimeline 	= $('.tweet-slide .tweet-timeline');
+	my.timelieButton 	= $('.tweet-slide .timeline-button');
+	my.contenTimeline 	= '';
 	my.socket 			= io;
 
 	/**
-	 * Open sidebar
+	 * Open sidebar& load user's timeline by socket io event
 	 * @param float posLeft
 	 * @param float posTop
 	 * @param JSON data
@@ -19,19 +21,16 @@ var Sidebar = (function(my, io, $){
 	 */
 	my.open = function (posLeft, posTop, data)
 	{
-		var content = "<h2>Posté par <a href='https://twitter.com/"+data.tweet.user.screen_name+"' target='_blank'>@"+data.tweet.user.screen_name+"</a></h2><p>\""+data.tweet.text+"\"</p>";
-		var contenTimeline = '';
+		var content = "<h2><img src='"+data.tweet.user.profile_image_url+"'></h2><p>"+data.tweet.text+"</p>";
 
 		my.socket.emit('require_user_timeline', { screen_name: data.tweet.user.screen_name });
 		my.socket.on('require_user_timeline', function(user_timeline){
 			for (i = 0, j = user_timeline.tweets.length ; i < j ; i++) {
-				contenTimeline += "<h2><a href='https://twitter.com/"+data.tweet.user.screen_name+"' target='_blank'>@"+data.tweet.user.screen_name+"</a></h2><p>"+user_timeline.tweets[i].text+"</p>";
+				my.contenTimeline += "<p>"+user_timeline.tweets[i].text+"</p>";
 			}
-			my.sidebarTimeline.hide().html(contenTimeline).fadeIn();
 		});
 
 		my.sidebarContent.fadeToggle();
-		my.sidebarTimeline.fadeToggle();
 
 		if (my.sidebar.css('display')=='block') {
 			my.close();
@@ -51,24 +50,38 @@ var Sidebar = (function(my, io, $){
 	my.close = function ()
 	{
 		my.sidebarContent.fadeToggle();
-		my.sidebarTimeline.fadeToggle();
+		my.sidebarTimeline.fadeOut();
+		$('.tweet-slide .timeline-button').children('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
 
 		my.sidebar.animate({
 			width: 'toggle'
-		}, 200);
+		}, 150);
 	};
 
 	/**
-	 * Init Sidebar, set default status 'close'
+	 * Init Sidebar, set default status 'close' & add click event on timeline button plus
 	 * @return void
 	 */
 	my.init= function()
 	{
 		console.log('init Sidebar Module');
+
 		my.sidebar.css('visibility', 'hidden');
+
 		my.close();
+
+		my.timelieButton.click(function (){
+			if($(this).children('.fa').hasClass('fa-plus-square-o')) {
+				my.sidebarTimeline.hide().html(my.contenTimeline).fadeIn();
+				$(this).children('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			} else {
+				my.sidebarTimeline.fadeOut();
+				$(this).children('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			}
+		});
+
 		setTimeout(function(){my.sidebar.css('visibility', 'visible');}, 200);
 	}
 
 	return my;
-}(Sidebar || {}, socket || {}, jQuery));
+}(Sidebar || {}, io || {}, jQuery));
