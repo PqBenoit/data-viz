@@ -22,9 +22,11 @@ var Sidebar = (function(my, io, $){
 	my.open = function (posLeft, posTop, data)
 	{
 		var content = "<h2><img src='"+data.tweet.user.profile_image_url+"'></h2><p>"+data.tweet.text+"</p>";
+		my.contenTimeline = '';
 
+		my.socket.removeAllListeners("require_user_timeline_response");
 		my.socket.emit('require_user_timeline', { screen_name: data.tweet.user.screen_name });
-		my.socket.on('require_user_timeline', function(user_timeline){
+		my.socket.on('require_user_timeline_response', function(user_timeline){
 			for (i = 0, j = user_timeline.tweets.length ; i < j ; i++) {
 				my.contenTimeline += "<p>"+user_timeline.tweets[i].text+"</p>";
 			}
@@ -51,6 +53,7 @@ var Sidebar = (function(my, io, $){
 	{
 		my.sidebarContent.fadeToggle();
 		my.sidebarTimeline.fadeOut();
+		my.sidebarTimeline.html('');
 		$('.tweet-slide .timeline-button').children('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
 
 		my.sidebar.animate({
@@ -76,6 +79,7 @@ var Sidebar = (function(my, io, $){
 				$(this).children('.fa').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
 			} else {
 				my.sidebarTimeline.fadeOut();
+				my.sidebarTimeline.html('');
 				$(this).children('.fa').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
 			}
 		});

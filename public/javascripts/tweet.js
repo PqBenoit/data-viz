@@ -18,6 +18,7 @@ var Tweet = (function(my, Map, io, Sidebar, $)
 	{
 		my.socket.on('tweet', function(data){
 			my.setTweetPosition(data);
+			my.statStream(data)
 		});
 	};
 
@@ -42,6 +43,21 @@ var Tweet = (function(my, Map, io, Sidebar, $)
 				Sidebar.open($(this).offset().left, $(this).offset().top, data);
 			});
 		}
+	};
+
+	my.initGraph = function ()
+	{
+		
+	}
+
+	/**
+	 * @param JSON data
+	 */
+	my.statStream = function (data)
+	{
+		var date = new Date();
+		date.setTime(data.tweet.timestamp_ms)
+		console.log(date.getHours());
 	};
 
 	/**

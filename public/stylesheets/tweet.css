@@ -1,5 +1,8 @@
-#container.tweets {
+#container.tweets, #container.stats {
     height: 100%;
+}
+#container.stats {
+    background: #2C3E50;
 }
 /*#map {
     -webkit-animation-name: mapAnimX;

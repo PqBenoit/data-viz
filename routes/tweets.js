@@ -27,7 +27,7 @@ module.exports = function (server)
 
 	    socket.on("require_user_timeline", function (data) {
 	        tweets.get('statuses/user_timeline', {screen_name: data.screen_name, count: 5, include_rts: 0 }, function(err, data, response) {
-	        	socket.emit("require_user_timeline", { tweets: data });
+	        	socket.emit("require_user_timeline_response", { tweets: data });
 	        });
 	    });
 	    socket.on('disconnect', function () {
