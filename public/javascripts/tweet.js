@@ -1,11 +1,12 @@
 /**
- * @param Tweet my
- * @param Map Map
+ * @param Module my
+ * @param Module Map
  * @param socket.io io
+ * @param Module TweetGraph
  * @param jQuery $
- * @return Tweet
+ * @return Module Tweet
  */
-var Tweet = (function(my, Map, io, Sidebar, $)
+var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 {
 	my.socket = io;
 
@@ -18,7 +19,7 @@ var Tweet = (function(my, Map, io, Sidebar, $)
 	{
 		my.socket.on('tweet', function(data){
 			my.setTweetPosition(data);
-			my.statStream(data)
+			TweetGraph.update(data);
 		});
 	};
 
@@ -45,21 +46,6 @@ var Tweet = (function(my, Map, io, Sidebar, $)
 		}
 	};
 
-	my.initGraph = function ()
-	{
-		
-	}
-
-	/**
-	 * @param JSON data
-	 */
-	my.statStream = function (data)
-	{
-		var date = new Date();
-		date.setTime(data.tweet.timestamp_ms)
-		console.log(date.getHours());
-	};
-
 	/**
 	 * Init Tweet Module
 	 * return void
@@ -75,4 +61,4 @@ var Tweet = (function(my, Map, io, Sidebar, $)
 
 
 	return my;
-}(Tweet || {}, Map || {}, io || {}, Sidebar || {}, jQuery));
+}(Tweet || {}, Map || {}, io || {}, Sidebar || {}, TweetGraph || {}, jQuery));

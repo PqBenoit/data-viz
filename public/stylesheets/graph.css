@@ -1,0 +1,9 @@
+.flot-text {
+	color: #ffffff !important;
+}
+.flot-x-axis {
+	top: 10px !important;
+}
+.flot-y-axis {
+	left: -10px !important;
+}

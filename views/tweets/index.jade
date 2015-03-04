@@ -14,16 +14,21 @@ block content
 			h2(class="timeline-button") Timeline&nbsp;
 				i(class="fa fa-plus-square-o")
 			div(class="tweet-timeline")
+
 	section(id="container", class="stats")
 		h1 Statistiques
-	
+		div(id="flot-placeholder1", style="width:1024px;height:300px;margin:0 auto")
+
 	script(src='/javascripts/jquery.flot.min.js')
+	script(src='/javascripts/jquery.flot.time.min.js')
 	script(src='/javascripts/map.js')
 	script(src='/javascripts/sidebar.js')
+	script(src='/javascripts/tweetGraph.js')
 	script(src='/javascripts/tweet.js')
 	script(type='text/javascript').
 		$(document).ready(function() {
 			Sidebar.init();
 			Map.init();
+			TweetGraph.init();
 			Tweet.init();
 		});

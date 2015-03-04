@@ -20,7 +20,12 @@ module.exports = function (server)
 	 * twitter request API
 	 */
 	io.on("connection", function(socket){
-		console.log('socket io');
+		console.log('connection socket io');
+
+		socket.on("require_tweets_graph", function (today) {
+			console.log('tweets for graph required');
+	    });
+
 		stream.on('tweet', function (tweet){
 			socket.emit('tweet', { tweet: tweet });
 		});
@@ -30,6 +35,7 @@ module.exports = function (server)
 	        	socket.emit("require_user_timeline_response", { tweets: data });
 	        });
 	    });
+
 	    socket.on('disconnect', function () {
 		    console.log('socket io disconnected');
 		    socket.conn.close();
