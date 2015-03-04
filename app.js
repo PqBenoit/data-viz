@@ -4,27 +4,23 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var Twit = require('twit');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var tweet = require('./routes/tweets');
 
 var app = express();
 
-var tweets = new Twit({
-	consumer_key: "pncTvmlzl8ARPmUcQTSHEzXez",
-	consumer_secret: "pPAIV4ynh3qbKNRIg5YeR6831FZIF4WJXfoJUU0RNe8esO1GJn",
-	access_token: "847509511-oroeKcoKDg0imxW9fIrwcVa25u3WOgVOaI6oOH4a",
-	access_token_secret: "CbVzjS1I1sNCWCe8N6JLNe8BZDcbcvYauqOs8udbZJgfb"
-});
+var http = require('http');
 
-var paris = ["2.25", "48.81", "2.41", "48.9"];
-var stream = tweets.stream('statuses/filter', { locations: paris });
+/**
+* Get port from environment and store in Express.
+*/
+app.port = normalizePort(process.env.PORT || '3000');
 
-stream.on('tweet', function (tweet) {
-	console.log(tweet.user.name+': '+tweet.text);
-});
+/**
+* Create HTTP server.
+*/
+app.server = http.createServer(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+var tweet = require('./routes/tweets')(app.server);
 app.use('/tweets', tweet);
 
 // catch 404 and forward to error handler
@@ -75,3 +72,19 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+/**
+* Normalize a port into a number, string, or false.
+*/
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+  return false;
+}

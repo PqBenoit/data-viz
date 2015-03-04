@@ -1,0 +1,142 @@
+#container.tweets, #container.stats {
+    height: 100%;
+}
+#container.stats {
+    background: #2C3E50;
+}
+/*#map {
+    -webkit-animation-name: mapAnimX;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-duration: 1.5s;
+
+    animation-name: mapAnimX;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 1.5s;
+
+    -webkit-transform: rotateX(60deg);
+    transform: rotateX(60deg);
+}
+
+@-webkit-keyframes mapAnimX {
+    0% {
+    	opacity: 0;
+        -webkit-transform: rotateX(0deg);
+    }
+    25% {
+    	opacity: 0;
+    }
+    60% {
+    	opacity: 0.4;
+    }
+    100% {
+    	opacity: 1;
+        -webkit-transform: rotateX(60deg);
+    }
+}
+@keyframes mapAnimX {
+    0% {
+    	opacity: 0;
+        transform: rotateX(0deg);
+    }
+    25% {
+    	opacity: 0;
+    }
+    60% {
+    	opacity: 0.4;
+    }
+    100% {
+    	opacity: 1;
+        transform: rotateX(60deg);
+    }
+}
+
+#map circle {
+    transform: translateY(420px);
+    -webkit-transform: translateY(420px);
+    cursor: pointer;
+}*/
+
+#map circle {
+    cursor: pointer;
+}
+
+.tweet-slide {
+    background: #2C3E50;
+    color: #FFFFFF;
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+}  
+    .tweet-slide h1 {
+        padding: 26px 10px 0 0;
+        text-align: right;
+        min-width: 250px;
+    }
+    .tweet-slide h2 {
+        padding: 25px 10px 25px 0;
+        text-align: right;
+        min-width: 250px;
+    } 
+    .tweet-slide .fa {
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+    .tweet-slide .timeline-button {
+        cursor: pointer;
+    }
+    .tweet-slide .fa-close {
+        float: left;
+        margin: 15px 0 25px 10px;
+    }
+
+    .tweet-slide .tweet-content {
+        clear: both;
+        text-align: center;
+        min-width: 250px;
+    }   .tweet-slide .tweet-content img {
+            border-radius: 25px;
+        }   
+        .tweet-slide .tweet-content h2 {
+            min-height: 3.5em;
+            line-height: 3.5em;
+            font-size: 1.1em; 
+            padding: 0 10px 0 10px;
+            margin: 0;
+            text-align: center;
+            color: #FFFFFF;
+        }   
+            .tweet-slide .tweet-content h2 a {
+                color: #FFFFFF;
+                text-decoration: underline;
+            }
+
+        .tweet-slide .tweet-content p {
+            background: #34495E;
+            color: #FFFFFF;
+            text-align: justify;
+            padding: 20px 10px 20px 10px;
+        }
+
+    .tweet-slide .tweet-timeline {
+        background: none;
+        min-width: 250px;
+    }   
+        .tweet-slide .tweet-timeline h2 {
+            padding: 0 10px 0 10px;
+            margin: 0;
+            text-align: left;
+        }   
+            .tweet-slide .tweet-timeline h2 a {
+                font-size: 1em; 
+                color: #000000;
+                text-decoration: underline;
+            }
+
+        .tweet-slide .tweet-timeline p {
+            padding: 10px;
+        }

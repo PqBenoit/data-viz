@@ -1,8 +1,13 @@
-// ValeurConteneurCherchée = ( MaxConteneur * (ValeurRéelleDonnée - MinRéel) )  /  (MaxRéel - MinRéel)
-
+/**
+ * @param Map my
+ * @param Config Config
+ * @param jQuery $
+ * @return Map
+ */
 var Map = (function(my, Config, $){
   my.$mapContainer = $('#map');
   my.rsr = undefined;
+
   /**
    * Set map size from window size
    * @return void
@@ -14,8 +19,9 @@ var Map = (function(my, Config, $){
     my.$mapContainer.css('width', wWidth+'px');
     my.$mapContainer.css('height', wHeight+'px');
   };
+
   /**
-   * Calc position x and y from lon and lat
+   * Calc position x and y from lng and lat
    *
    * @param Raphael my.rsr
    * @param float lon
@@ -23,7 +29,7 @@ var Map = (function(my, Config, $){
    *
    * @return Object
    */
-  my.getPixelPosition = function(rsr, lon, lat){
+  my.getPixelPosition = function (rsr, lon, lat){
     var paths = $('path');
 
     var maxLeft = 0;
@@ -50,20 +56,26 @@ var Map = (function(my, Config, $){
     var ratio = (widthSvg/Config.svgSize.width);
 
     var posLon = ( ( (maxLeft - minLeft) * (lon - Config.paris.mapCoordonate.minLon) / (Config.paris.mapCoordonate.maxLon - Config.paris.mapCoordonate.minLon) )/ratio );
-    var posLat = ( ( (maxHeight-minHeight)-((maxHeight - minHeight) * (lat - Config.paris.mapCoordonate.minLat) /  (Config.paris.mapCoordonate.maxLat - Config.paris.mapCoordonate.minLat)))/ratio );
+    var posLat = ( ( (maxHeight - minHeight) - ((maxHeight - minHeight) * (lat - Config.paris.mapCoordonate.minLat) /  (Config.paris.mapCoordonate.maxLat - Config.paris.mapCoordonate.minLat)))/ratio );
 
     return {x:posLon,y:posLat};
   };
+
   /**
   * Resize event for map module
   * @return void
   */
-  my.resizeEvent = function(){
+  my.resizeEvent = function (){
     $(window).resize(function(){
       my.setSize();
     });
   };
-  // TODO: Put the magic value in config, and optimise :)
+
+  /**
+  * Init raphaeljs lib with path for Paris
+  * @see Config
+  * @return void
+  */
   my.initRaphael = function(){
     my.rsr = Raphael('map', '100%', '100%');
     var group_a = my.rsr.set(); group_a.attr({'name': 'group_a'}); 
@@ -96,21 +108,17 @@ var Map = (function(my, Config, $){
     my.rsr.setViewBox(0, 0, Config.svgSize.width, Config.svgSize.height );
     my.rsr.canvas.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   };
-  my.init = function(){
-    $(document).ready(function() {
+
+  /**
+  * Init Map module
+  * @return void
+  */
+  my.init = function (){
       console.log('init Map Module');
       my.setSize();
       my.resizeEvent();
       my.initRaphael();
-
-      // Some magic happend down there :) TODO: Remove
-      var pos = my.getPixelPosition(my.rsr, 2.3476886, 48.8545851);
-      var circle = my.rsr.circle(pos.x, pos.y, 3);
-      circle.attr('fill', '#4099FF');
-      circle.attr('stroke', 'none');
-    });
   };
-
 
   return my;
 }(Map || {}, Config || {}, jQuery));
