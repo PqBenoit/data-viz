@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var Twit = require('twit');
 
+var localTweet = require('../model/tweet');
+
+var limit = 500000;
+var currentCount = 0;
+
 module.exports = function (server)
 {
 	var io = require('socket.io')(server);
@@ -22,12 +27,41 @@ module.exports = function (server)
 	io.on("connection", function(socket){
 		console.log('connection socket io');
 
-		socket.on("require_tweets_graph", function (today) {
-			console.log('tweets for graph required');
+		socket.on("require_tweets_graph", function () {
+			localTweet.find({}, function(err, res){
+				socket.emit('lTweetHashtags', {lTweetGraph: res});
+			});
 	    });
 
 		stream.on('tweet', function (tweet){
 			socket.emit('tweet', { tweet: tweet });
+
+			currentCount++;
+
+
+			if(currentCount == limit){
+				localTweet.findOne({}, {}, {sort:{'created_at': 1}}, function(err, result){
+					result.remove();
+				});			
+				// localTweet.findOne({sort:{_id:-1}}).remove(function(err, result){
+				// 	console.log('removing : ', result);
+				// });
+				currentCount = limit - 1;
+			}
+
+			var lTweet = new localTweet();
+
+			lTweet.timestamp = tweet.timestamp_ms;
+			lTweet.hashtag = [];
+
+			for(var i = 0; i < tweet.entities.hashtags.length; i++){
+				lTweet.hashtag.push(tweet.entities.hashtags[i].text);
+			}
+
+			lTweet.save(function(err, result){
+				if(!err)
+					console.log(currentCount);
+			});
 		});
 
 	    socket.on("require_user_timeline", function (data) {

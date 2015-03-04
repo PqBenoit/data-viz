@@ -12,8 +12,7 @@ var TweetGraph = (function(my, io, $)
 	my.data = [];
 	my.dataset =  [];
 	my.options = {};
-	my.hourNow = new Date().getHours();
-	my.minutesNow = new Date().getMinutes();
+	my.hashtagsArray = {init: 0};
 
 	/**
 	 * Init graph options, construct data array, then build graph
@@ -82,6 +81,55 @@ var TweetGraph = (function(my, io, $)
 	};
 
 	/**
+	 * Build hashtags graph, top 3 hashtags
+	 * @return void
+	 */
+	my.hashtag = function(){
+		var h1, h2, h3 = 0;
+
+		my.socket.removeAllListeners("lTweetHashtags");
+		my.socket.on('lTweetHashtags', function(res){
+
+			for (var i = 0, j = res.lTweetGraph.length ; i < j ; i++) {
+				var hashtags = res.lTweetGraph[i].hashtag;
+				var hashtagsLength = hashtags.length;
+
+				if (hashtagsLength > 1) {
+					for (var ii = 0, jj = hashtagsLength ; ii < jj ; ii++) {
+						my.buildHashtagsArray(hashtags[ii]);
+					}
+				} else if (hashtags.length == 1) {
+					my.buildHashtagsArray(hashtags[0]);
+				}
+			}
+
+			console.log(my.hashtagsArray);
+
+		});
+	};
+
+	my.compareNombres = function (a, b) {
+	  return b - a;
+	}
+
+	/**
+	 * Increment my.hashtagsArray entry
+	 * @param string hashtag
+	 * @return void
+	 */
+	my.buildHashtagsArray = function (hashtag)
+	{
+		for (var i = 0, j = Object.keys(my.hashtagsArray).length ; i < j ; i++) {
+			if (my.hashtagsArray[hashtag]) {
+				my.hashtagsArray[hashtag]++;
+			} else {
+				my.hashtagsArray[hashtag] = 1;
+			}
+		}
+	}
+
+
+	/**
 	 * Init TweetGraph Module
 	 * @return void
 	 */
@@ -89,14 +137,12 @@ var TweetGraph = (function(my, io, $)
 	{
 		console.log('init TweetGraph Module');
 
-		var date = new Date();
-		var month = (date.getMonth()+1)<10?"0"+(date.getMonth()+1):(date.getMonth()+1);
-		var today = date.getFullYear()+"-"+month+"-"+(date.getDate()-1);
+		my.socket.emit('require_tweets_graph');
 
-		my.socket.emit('require_tweets_graph', { today: today });
-
-		my.buildGraph();
+		my.hashtag();
 	};
+
+
 
 
 	return my;

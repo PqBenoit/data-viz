@@ -10,6 +10,20 @@ var users = require('./routes/users');
 
 var app = express();
 
+var mongoose = require('mongoose');
+
+var mongolabStringConnexion = 'mongodb://root:root-kikeriki@ds039231.mongolab.com:39231/kikeriki';
+
+mongoose.connect(mongolabStringConnexion);
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function callback(){
+    console.log('Connection establish to: mongolab');
+});
+
+
 var http = require('http');
 
 /**
