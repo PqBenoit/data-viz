@@ -5,5 +5,16 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='/javascripts/jquery.js')
     script(src='/javascripts/config.js')
-  body
+
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+    script(src='/bootstrap/js/bootstrap.js')
+    link(rel='stylesheet', href='/stylesheets/index.css')
+    
+    nav.navbar-default
+      div.container
+        div.navbar-header
+          a.navbar-brand(href="tweets") Tweets
+          a.navbar-brand(href="#") Lieux de tournage
+          a.navbar-brand(href="#") 3e DataViz
+  body.blackback
     block content
