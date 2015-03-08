@@ -73,7 +73,6 @@
 }
 
 .blackback {
-  color: #ffffff;
   background-color: black;
   height: 100%;
   width: 100%;
@@ -93,5 +92,6 @@
 }
 
 .welcome {
+  color: #ffffff; 
   margin-top: 150px;
 }
