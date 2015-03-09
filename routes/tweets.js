@@ -29,7 +29,7 @@ module.exports = function (server)
 
 		socket.on("require_tweets_graph", function () {
 			localTweet.find({}, function(err, res){
-				socket.emit('lTweetHashtags', {lTweetGraph: res});
+				socket.emit('response_tweets_graph', {lTweetGraph: res});
 			});
 	    });
 

@@ -8,7 +8,6 @@
 var TweetGraph = (function(my, io, $)
 {
 	my.socket = io;
-	my.nbTweetHours = [];
 	my.data = [];
 	my.dataset =  [];
 	my.options = {};
@@ -16,12 +15,27 @@ var TweetGraph = (function(my, io, $)
 
 	/**
 	 * Init graph options, construct data array, then build graph
+	 * @param res
  	 * @return void
 	 */
-	my.buildGraph = function ()
+	my.buildGraph = function (res)
 	{
-		var tweetHour;
-		my.nbTweetHours[my.hourNow] = 0;
+		var data = [];
+		for (var ii = 0, jj = res.lTweetGraph.length ; ii < jj ; ii++) {
+				var hour = new Date(res.lTweetGraph[ii].timestamp).getHours();
+				if (data[hour]) {
+					data[hour]++;
+					for (var i = 0, j = my.data.length ; i < j ; i++) {
+						if (my.data[i][0] == hour) {
+							my.data[i][1]++;
+						}
+					}
+				} else {
+					data[hour] = 1;
+					my.data.push([hour, data[hour]]);
+				}
+		}
+		console.log(my.data);
 		my.options = {
 		    series: {
                 bars: {
@@ -39,13 +53,13 @@ var TweetGraph = (function(my, io, $)
 		    	color: "black",
 			    tickSize: 1,
 			    tickDecimals: 0,
-			    min: 1,
-			    max: 24
+			    min: 0,
+			    max: 23
 		    },
 		    yaxis: {
 		    	color: "black",
 		        min: 0,
-		        tickSize: 10,
+		        tickSize: 5000,
 		        tickDecimals: 0,
 		        axisLabelUseCanvas: true
 		    },
@@ -58,75 +72,53 @@ var TweetGraph = (function(my, io, $)
 		    }
 		};
 
-		//Init graph data array
-		my.data.push([my.hourNow, my.nbTweetHours[my.hourNow]]);
-
 		//Build first graph param array
-		my.dataset.push({ label: "Nombre de tweets répartient par heure", data: my.data, color: "#333333" });
+		my.dataset.push({ label: "Nombre de tweets répartient par heures", data: my.data, color: "#333333" });
 
 	    $.plot($("#flot-placeholder1"), my.dataset, my.options);
 	};
 
 	/**
-	 * Update graph data for current hour
-	 * @see Tweet.startStream()
-	 * @param JSON data
-	 */
-	my.update = function (data)
-	{
-		console.log("update graph with stream");
-		my.dataset[0] = { label: "Nombre de tweets par heure", data: my.data, color: "#333333" };
-
-		$.plot($("#flot-placeholder1"), my.dataset, my.options);
-	};
-
-	/**
-	 * Build hashtags top
+	 * Build hashtags top graph
+	 * @param res
 	 * @return void
 	 */
-	my.topHashtag = function(){
+	my.topHashtag = function(res){
 		var h1, h2, h3 = 0;
 
-		my.socket.removeAllListeners("lTweetHashtags");
-		my.socket.on('lTweetHashtags', function(res){
+		for (var i = 0, j = res.lTweetGraph.length ; i < j ; i++) {
+			var hashtags = res.lTweetGraph[i].hashtag;
+			var hashtagsLength = hashtags.length;
 
-			for (var i = 0, j = res.lTweetGraph.length ; i < j ; i++) {
-				var hashtags = res.lTweetGraph[i].hashtag;
-				var hashtagsLength = hashtags.length;
-
-				if (hashtagsLength > 1) {
-					for (var ii = 0, jj = hashtagsLength ; ii < jj ; ii++) {
-						my.buildHashtagsArray(hashtags[ii]);
-					}
-				} else if (hashtags.length == 1) {
-					my.buildHashtagsArray(hashtags[0]);
+			if (hashtagsLength > 1) {
+				for (var ii = 0, jj = hashtagsLength ; ii < jj ; ii++) {
+					my.buildHashtagsArray(hashtags[ii]);
 				}
+			} else if (hashtags.length == 1) {
+				my.buildHashtagsArray(hashtags[0]);
 			}
+		}
 
-			var hastagSort = [];
-			for (var hashtag in my.hashtagsArray) {
-			    hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
-			}
-			hastagSort.sort(function(a, b) {return b[1] - a[1]});
+		var hastagSort = [];
+		for (var hashtag in my.hashtagsArray) {
+		    hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
+		}
 
-			$('#top1-graph').css('height', hastagSort[0][1]+'px');
-			$('#top1-name').text('#'+hastagSort[0][0]);
+		hastagSort.sort(function(a, b) {return b[1] - a[1]});
 
-			$('#top2-graph').css('height', hastagSort[1][1]+'px');
-			$('#top2-name').text('#'+hastagSort[1][0]);
+		$('#top1-graph').css('height', hastagSort[0][1]+'px');
+		$('#top1-name').text('#'+hastagSort[0][0]);
 
-			$('#top3-graph').css('height', hastagSort[2][1]+'px');
-			$('#top3-name').text('#'+hastagSort[2][0]);
+		$('#top2-graph').css('height', hastagSort[1][1]+'px');
+		$('#top2-name').text('#'+hastagSort[1][0]);
 
-		});
+		$('#top3-graph').css('height', hastagSort[2][1]+'px');
+		$('#top3-name').text('#'+hastagSort[2][0]);
+
 	};
 
-	my.compareNombres = function (a, b) {
-	  return b - a;
-	}
-
 	/**
-	 * Increment my.hashtagsArray entry
+	 * Increment my.hashtagsArray entries
 	 * @param string hashtag
 	 * @return void
 	 */
@@ -150,10 +142,12 @@ var TweetGraph = (function(my, io, $)
 
 		my.socket.emit('require_tweets_graph');
 
-		my.topHashtag();
+		my.socket.removeAllListeners("response_tweets_graph");
+		my.socket.on('response_tweets_graph', function(res){
+			my.buildGraph(res);
+			my.topHashtag(res);
+		});
 	};
-
-
 
 
 	return my;

@@ -19,7 +19,6 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 	{
 		my.socket.on('tweet', function(data){
 			my.setTweetPosition(data);
-			TweetGraph.update(data);
 		});
 	};
 
