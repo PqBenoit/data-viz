@@ -43,9 +43,6 @@ module.exports = function (server)
 				localTweet.findOne({}, {}, {sort:{'created_at': 1}}, function(err, result){
 					result.remove();
 				});			
-				// localTweet.findOne({sort:{_id:-1}}).remove(function(err, result){
-				// 	console.log('removing : ', result);
-				// });
 				currentCount = limit - 1;
 			}
 

@@ -81,10 +81,10 @@ var TweetGraph = (function(my, io, $)
 	};
 
 	/**
-	 * Build hashtags graph, top 3 hashtags
+	 * Build hashtags top
 	 * @return void
 	 */
-	my.hashtag = function(){
+	my.topHashtag = function(){
 		var h1, h2, h3 = 0;
 
 		my.socket.removeAllListeners("lTweetHashtags");
@@ -103,7 +103,20 @@ var TweetGraph = (function(my, io, $)
 				}
 			}
 
-			console.log(my.hashtagsArray);
+			var hastagSort = [];
+			for (var hashtag in my.hashtagsArray) {
+			    hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
+			}
+			hastagSort.sort(function(a, b) {return b[1] - a[1]});
+
+			$('#top1-graph').css('height', hastagSort[0][1]+'px');
+			$('#top1-name').text('#'+hastagSort[0][0]);
+
+			$('#top2-graph').css('height', hastagSort[1][1]+'px');
+			$('#top2-name').text('#'+hastagSort[1][0]);
+
+			$('#top3-graph').css('height', hastagSort[2][1]+'px');
+			$('#top3-name').text('#'+hastagSort[2][0]);
 
 		});
 	};
@@ -119,12 +132,10 @@ var TweetGraph = (function(my, io, $)
 	 */
 	my.buildHashtagsArray = function (hashtag)
 	{
-		for (var i = 0, j = Object.keys(my.hashtagsArray).length ; i < j ; i++) {
-			if (my.hashtagsArray[hashtag]) {
-				my.hashtagsArray[hashtag]++;
-			} else {
-				my.hashtagsArray[hashtag] = 1;
-			}
+		if (my.hashtagsArray[hashtag]) {
+			my.hashtagsArray[hashtag]++;
+		} else {
+			my.hashtagsArray[hashtag] = 1;
 		}
 	}
 
@@ -139,7 +150,7 @@ var TweetGraph = (function(my, io, $)
 
 		my.socket.emit('require_tweets_graph');
 
-		my.hashtag();
+		my.topHashtag();
 	};
 
 
