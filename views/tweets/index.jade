@@ -1,42 +1,44 @@
 extends ../layout
 
-block content
-	script(src='/javascripts/raphael.js')
-	script(src='https://cdn.socket.io/socket.io-1.3.3.js')
-	script.
-		var io = io('http://localhost:3000');
+block content	
+	section.tweets-page
+		include ../nav
 
-	section(id="container", class="tweets")
-		div(id="map")
-		aside(class="tweet-slide")
-			i(class="fa fa-close")
-			div(class="tweet-content")
-			h2(class="timeline-button") Timeline&nbsp;
-				i(class="fa fa-plus-square-o")
-			div(class="tweet-timeline")
+		script(src='/javascripts/raphael.js')
+		script(src='https://cdn.socket.io/socket.io-1.3.3.js')
+		script.
+			var io = io('http://localhost:3000');
 
-	section(id="container", class="stats")
-		h1 Statistiques 
-			i(class="fa fa-refresh")
-		div(id="flot-placeholder1", style="width:1024px;height:300px;margin:0 auto")
-		section(id="topHashtags")
-			div(id="top1-name")
-			div(id="top2-name")
-			div(id="top3-name")
-			div(id="top1-graph")
-			div(id="top2-graph")
-			div(id="top3-graph")
+		section(id="container", class="tweets")
+			div(id="map")
+			aside(class="tweet-slide")
+				i(class="fa fa-close")
+				div(class="tweet-content")
+				h2(class="timeline-button") Timeline&nbsp;
+					i(class="fa fa-plus-square-o")
+				div(class="tweet-timeline")
 
-	script(src='/javascripts/jquery.flot.min.js')
-	script(src='/javascripts/jquery.flot.time.min.js')
-	script(src='/javascripts/map.js')
-	script(src='/javascripts/sidebar.js')
-	script(src='/javascripts/tweetGraph.js')
-	script(src='/javascripts/tweet.js')
-	script(type='text/javascript').
-		$(document).ready(function() {
-			Sidebar.init();
-			Map.init();
-			TweetGraph.init();
-			Tweet.init();
-		});
+		section(id="container", class="stats")
+			h1 Statistiques 
+				i(class="fa fa-refresh")
+			div(id="flot-placeholder1", style="width:1024px;height:300px;margin:0 auto")
+			section(id="topHashtags")
+				div(id="top1-name")
+				div(id="top2-name")
+				div(id="top3-name")
+				div(id="top1-graph")
+				div(id="top2-graph")
+				div(id="top3-graph")
+
+		script(src='/javascripts/jquery.flot.min.js')
+		script(src='/javascripts/map.js')
+		script(src='/javascripts/sidebar.js')
+		script(src='/javascripts/tweetGraph.js')
+		script(src='/javascripts/tweet.js')
+		script(type='text/javascript').
+			$(document).ready(function() {
+				Sidebar.init();
+				Map.init();
+				TweetGraph.init();
+				Tweet.init();
+			});

@@ -6,7 +6,11 @@
  * 	base: arial, sans-serif;
  * 	another: ...;
  */
-
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
 /**
  * RESET
  */
@@ -29,9 +33,6 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -44,7 +45,7 @@ html {
 }
 body {
 	line-height: 1;
-	font-size: 100%;
+	font-size: 0.8em;
     height: 100%;
     font-family: arial, sans-serif;
 }
@@ -62,5 +63,4 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	
 }

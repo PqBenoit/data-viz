@@ -1,0 +1,42 @@
+nav {
+  background: #000000;
+  color: #ffffff;
+  height: 5em;
+  line-height: 5em;
+  text-align: right;
+  padding: 0 5%;
+}
+nav .logo {
+  background: url('/img/logo.png') center center no-repeat;
+  background-size: 100px;
+  height: 5em;
+  width: 100px;
+  float: left;
+}
+nav .logo a{
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+nav ul li {
+  display: inline-block;
+  margin-left: 20px;
+}
+nav ul li a {
+  color: #ffffff;
+  font-size: 2em;
+  font-weight: 200;
+  font-family: 'Source Sans Pro', sans-serif;
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+nav ul li a:hover {
+  border-bottom: 1px solid #ffffff;
+}
+.tweets-page nav ul li a.tweets-page {
+  border-bottom: 1px solid #ffffff;
+}
