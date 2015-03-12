@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  body.blackback
+    div.welcome
+      div
+        img.logo(src="./img/kikeriki.png")
+      p Data visualisations à Paris.
+      hr.divider
+      a.discover(href="/tweets") Découvrir ici
