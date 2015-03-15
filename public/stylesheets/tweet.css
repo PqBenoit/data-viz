@@ -2,75 +2,21 @@
     min-height: 100%;
 }
 #container.stats {
-    background: #2C3E50;
+    background: #000000;
 }
-/*#map {
-    -webkit-animation-name: mapAnimX;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-out;
-    -webkit-animation-duration: 1.5s;
-
-    animation-name: mapAnimX;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-out;
-    animation-duration: 1.5s;
-
-    -webkit-transform: rotateX(60deg);
-    transform: rotateX(60deg);
-}
-
-@-webkit-keyframes mapAnimX {
-    0% {
-    	opacity: 0;
-        -webkit-transform: rotateX(0deg);
-    }
-    25% {
-    	opacity: 0;
-    }
-    60% {
-    	opacity: 0.4;
-    }
-    100% {
-    	opacity: 1;
-        -webkit-transform: rotateX(60deg);
-    }
-}
-@keyframes mapAnimX {
-    0% {
-    	opacity: 0;
-        transform: rotateX(0deg);
-    }
-    25% {
-    	opacity: 0;
-    }
-    60% {
-    	opacity: 0.4;
-    }
-    100% {
-    	opacity: 1;
-        transform: rotateX(60deg);
-    }
-}
-
-#map circle {
-    transform: translateY(420px);
-    -webkit-transform: translateY(420px);
-    cursor: pointer;
-}*/
-
 #map circle {
     cursor: pointer;
 }
-
 .tweet-slide {
-    background: #2C3E50;
+    background: #000000;
     color: #FFFFFF;
     width: 250px;
     height: 100%;
     position: absolute;
-    top: 0;
+    top: 4em;
     right: 0;
     overflow: hidden;
+    font-size: 1.1em;
 }  
     .tweet-slide h1 {
         padding: 26px 10px 0 0;
@@ -116,7 +62,7 @@
             }
 
         .tweet-slide .tweet-content p {
-            background: #34495E;
+            background: #222222;
             color: #FFFFFF;
             text-align: justify;
             padding: 20px 10px 20px 10px;
@@ -125,7 +71,7 @@
     .tweet-slide .tweet-timeline {
         background: none;
         min-width: 250px;
-        overflow: scroll;
+        overflow: auto;
     }   
         .tweet-slide .tweet-timeline h2 {
             padding: 0 10px 0 10px;
@@ -139,6 +85,9 @@
             }
 
         .tweet-slide .tweet-timeline p {
-            padding: 10px;
-            overflow: scroll;
+            margin: 15px 0 15px 0;
+            padding: 0px 10px 0px 10px;
+            color: #CCCCCC;
+            border-right: 3px solid #FFFFFF;
+            text-align: justify;
         }
