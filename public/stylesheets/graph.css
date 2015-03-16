@@ -19,11 +19,11 @@
 	font-size: 1.2em;
 }
 #top1-graph {
-	background: #000;
+	background: #fff;
 }
 #top2-graph {
-	background: #333;
+	background: #666;
 }
 #top3-graph {
-	background: #666;
+	background: #333;
 }

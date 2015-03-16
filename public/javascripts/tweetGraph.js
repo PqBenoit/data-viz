@@ -99,21 +99,28 @@ var TweetGraph = (function(my, io, $)
 			}
 		}
 
+		var totalHash1 = 0;
+		var totalHash2 = 0;
 		var hastagSort = [];
 		for (var hashtag in my.hashtagsArray) {
-		    hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
+		    hastagSort.push([my.hashtagsArray[hashtag], hashtag])
+		    totalHash1 += hashtag;
+		    totalHash2 += my.hashtagsArray[hashtag];
 		}
 
 		hastagSort.sort(function(a, b) {return b[1] - a[1]});
 
-		$('#top1-graph').css('height', hastagSort[0][1]+'px');
-		$('#top1-name').text('#'+hastagSort[0][0]);
+		var top1 = (hastagSort[0][1]/totalHash2)*1000;
+		$('#top1-graph').css('height', top1+'px');
+		$('#top1-name').text('#'+hastagSort[0][0]+' - '+top1);
 
-		$('#top2-graph').css('height', hastagSort[1][1]+'px');
-		$('#top2-name').text('#'+hastagSort[1][0]);
+		var top2 = (hastagSort[1][1]/totalHash2)*1000;
+		$('#top2-graph').css('height', top2+'px');
+		$('#top2-name').text('#'+hastagSort[1][0]+' - '+top2);
 
-		$('#top3-graph').css('height', hastagSort[2][1]+'px');
-		$('#top3-name').text('#'+hastagSort[2][0]);
+		var top3 = (hastagSort[2][1]/totalHash2)*1000;
+		$('#top3-graph').css('height', top3+'px');
+		$('#top3-name').text('#'+hastagSort[2][0]+' - '+top3);
 
 	};
 
