@@ -1,7 +1,12 @@
-#container.tweets, #container.stats {
+/**
+ * Tweets map
+ */
+
+.container.tweets, .container.stats {
     min-height: 100%;
+    max-height: 100%;
 }
-#container.stats {
+.container.stats {
     background: #000000;
 }
 #map circle {

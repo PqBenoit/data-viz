@@ -1,3 +1,7 @@
+/**
+ * Tweet, shootings and tree stats graph
+ */
+
 .flot-text {
 	color: #ffffff !important;
 }
@@ -7,13 +11,19 @@
 .flot-y-axis {
 	left: -10px !important;
 }
-#topHashtags {
-	width: 50%;
-	margin: 100px auto 0 auto;
+#nb-tweets {
+	display: inline-block;
+	width: 48%;
+	margin: 100px 1% 0 1%;
+}
+#top-hashtags {
+	display: inline-block;
+	width: 48%;
+	margin: 100px 1% 0 1%;
 }
 #top1-graph, #top1-name, #top2-graph, #top2-name,  #top3-graph, #top3-name  {
 	display: inline-block;
-	width: 30%;
+	width: 32%;
 	text-align: center;
 	color: #ffffff;
 	font-size: 1.2em;

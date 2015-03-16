@@ -9,7 +9,7 @@ block content
 		script.
 			var io = io('http://localhost:3000');
 
-		section(id="container", class="tweets")
+		section(class="container tweets")
 			div(id="map")
 			aside(class="tweet-slide")
 				i(class="fa fa-close")
@@ -18,17 +18,18 @@ block content
 					i(class="fa fa-plus-square-o")
 				div(class="tweet-timeline")
 
-		section(id="container", class="stats")
+		section(class="container stats")
 			h1 Statistiques 
 				i(class="fa fa-refresh")
-			div(id="flot-placeholder1", style="width:1024px;height:300px;margin:0 auto")
-			section(id="topHashtags")
+			section(id="nb-tweets", style="width:48%;height:300px;")
+			section(id="top-hashtags")
 				div(id="top1-name")
 				div(id="top2-name")
 				div(id="top3-name")
 				div(id="top1-graph")
 				div(id="top2-graph")
 				div(id="top3-graph")
+			div(class="clear")
 
 		script(src='/javascripts/jquery.flot.min.js')
 		script(src='/javascripts/map.js')

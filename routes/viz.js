@@ -8,6 +8,12 @@ var Shooting = require('../model/shooting');
 var limit = 500000;
 var currentCount = 0;
 
+/**
+ * Routes for data viz
+ * @param server, to init socket.io
+ *
+ * @return router
+ */
 module.exports = function (server)
 {
 	var io = require('socket.io')(server);

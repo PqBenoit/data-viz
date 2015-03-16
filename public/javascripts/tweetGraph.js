@@ -46,7 +46,7 @@ var TweetGraph = (function(my, io, $)
                 align: "center",
                 barWidth: 0.5,
                 vertical: true,
-                fillColor: { colors: [{ opacity: 0.5 }, { opacity: 1}] },
+                fillColor: { colors: [{ opacity: 1 }, { opacity: 1}] },
                 lineWidth: 1
             },
 		    xaxis: {
@@ -64,18 +64,18 @@ var TweetGraph = (function(my, io, $)
 		        axisLabelUseCanvas: true
 		    },
 		    legend: {        
-		        labelBoxBorderColor: "#ffffff"
+		        labelBoxBorderColor: "#000000"
 		    },
 		    grid: {                
-		        backgroundColor: "#ffffff",
-		        tickColor: "#aaaaaa"
+		        backgroundColor: "#000000",
+		        tickColor: "#000000"
 		    }
 		};
 
 		//Build first graph param array
-		my.dataset.push({ label: "Nombre de tweets répartient par heures", data: my.data, color: "#333333" });
+		my.dataset.push({ label: "Nombre de tweets répartient par heures", data: my.data, color: "#ffffff" });
 
-	    $.plot($("#flot-placeholder1"), my.dataset, my.options);
+	    $.plot($("#nb-tweets"), my.dataset, my.options);
 	};
 
 	/**
@@ -136,7 +136,6 @@ var TweetGraph = (function(my, io, $)
 		}
 	}
 
-
 	/**
 	 * Init TweetGraph Module
 	 * @return void
@@ -153,7 +152,6 @@ var TweetGraph = (function(my, io, $)
 			my.topHashtag(res);
 		});
 	};
-
 
 	return my;
 
