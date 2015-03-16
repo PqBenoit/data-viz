@@ -21,7 +21,8 @@ var Sidebar = (function(my, io, $){
 	 */
 	my.open = function (posLeft, posTop, data)
 	{
-		var content = "<h2><img src='"+data.tweet.user.profile_image_url+"'></h2><p>"+data.tweet.text+"</p>";
+		console.log(data);
+		var content = "<h2><a href='https://twitter.com/"+data.tweet.user.screen_name+"' target='_blank'><img src='"+data.tweet.user.profile_image_url+"'></a></h2><p>"+data.tweet.text+"</p>";
 		my.contenTimeline = '';
 
 		my.socket.removeAllListeners("require_user_timeline_response");
