@@ -1,11 +1,13 @@
 /**
  * @param Module my
  * @param Module Map
+ * @param socket.io io
  * @param jQuery $
  * @return Module Shooting
  */
-var Shooting = (function(my, Map, $)
+var Shooting = (function(my, Map, io, $)
 {
+	my.socket = io;
 
 	/**
 	 * Websocket connection, with socket.io
@@ -14,23 +16,27 @@ var Shooting = (function(my, Map, $)
 	 */
 	my.setupShootingPlaces = function (data)
 	{
-		var circle = undefined;
+		my.socket.on('shootings', function(data){
+			console.log(data);
+			var circle = undefined;
 
-		for (var i = 0, j = data.length ; i < j ; i++) {
-			circle = undefined;
+			for (var i = 0, j = data.data.length ; i < j ; i++) {
+				circle = undefined;
 
-			if (null != data[i].shooting.fields.geo_coordinates) {
-				var pos = Map.getPixelPosition(Map.rsr, data[i].shooting.fields.geo_coordinates.lng, data[i].shooting.fields.geo_coordinates.lat);
+				if (null != data.data[i].fields.geo_coordinates) {
+					var pos = Map.getPixelPosition(Map.rsr, data.data[i].fields.geo_coordinates.lng, data.data[i].fields.geo_coordinates.lat);
 
-				circle = Map.rsr.circle(pos.x, pos.y, 10);
-				circle.attr('fill', '#4099FF');
-				circle.attr('stroke', 'none');
-				
-				// $(circle.node).click(function(){
-				// 	Sidebar.open($(this).offset().left, $(this).offset().top, data);
-				// });
+					circle = Map.rsr.circle(pos.x, pos.y, 10);
+					circle.attr('fill', '#4099FF');
+					circle.attr('stroke', 'none');
+					
+					// $(circle.node).click(function(){
+					// 	Sidebar.open($(this).offset().left, $(this).offset().top, data);
+					// });
+				}
 			}
-		}
+			console.log('shootings placed');
+		});
 	};
 
 	/**
@@ -40,9 +46,10 @@ var Shooting = (function(my, Map, $)
 	my.init = function (data)
 	{
 		console.log('init Shooting Module');
+		my.socket.emit('require_shootings');
 		my.setupShootingPlaces(data);
 	};
 
 
 	return my;
-}(Shooting || {}, Map || {}, jQuery));
+}(Shooting || {}, Map || {}, io || {}, jQuery));

@@ -2,6 +2,9 @@ extends ../layout
 
 block content
 	script(src='/javascripts/raphael.js')
+	script(src='https://cdn.socket.io/socket.io-1.3.3.js')
+	script.
+		var io = io('http://localhost:3000');
 	section.shootings-page
 		include ../nav
 		
@@ -13,6 +16,5 @@ block content
 	script(type='text/javascript').
 		$(document).ready(function() {
 			Map.init();
-			console.log(#{data});
 			Shooting.init();
 		});

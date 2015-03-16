@@ -50,11 +50,9 @@ app.use(express.static(path.join(__dirname, 'public')));
  * @see ./routes/
  */
 var routes = require('./routes/index');
-var tweets = require('./routes/tweets')(app.server);
-var shootings = require('./routes/shootings')();
+var viz = require('./routes/viz')(app.server);
 app.use('/', routes);
-app.use('/tweets', tweets);
-app.use('/shootings', shootings);
+app.use('/', viz);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

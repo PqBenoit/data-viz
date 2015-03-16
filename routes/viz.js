@@ -3,6 +3,7 @@ var router = express.Router();
 var Twit = require('twit');
 
 var localTweet = require('../model/tweet');
+var Shooting = require('../model/shooting');
 
 var limit = 500000;
 var currentCount = 0;
@@ -27,15 +28,44 @@ module.exports = function (server)
 	io.on("connection", function(socket){
 		console.log('connection socket io');
 
+		/**
+		 * Get data for tweets graph viz
+		 * Send data via socket.io
+		 */
 		socket.on("require_tweets_graph", function () {
+			console.log('require tweets db for graph');
 			localTweet.find({}, function(err, res){
 				socket.emit('response_tweets_graph', {lTweetGraph: res});
 			});
 	    });
 
+		/**
+		 * Get data for shootings viz
+		 * Send data via socket.io
+		 */
+	    socket.on("require_shootings", function () {
+	    	console.log('require shootings db for map');
+			Shooting.find({}, '-_id -__v -recordid -datasetid -date_debut_evenement', function(err, data){
+				if(!err) {
+					socket.emit('shootings', {data: data});
+				}
+			});
+	    });
+
+	    localTweet.count({}, function(err, c){
+	    	console.log('count tweets db');
+			currentCount = c;
+		});
+
+	    /**
+		 * Stream twitter
+		 * Save each tweet in db with max entries as 500 000 tweets
+		 * Send data via socket.io
+		 */
 		stream.on('tweet', function (tweet){
 			socket.emit('tweet', { tweet: tweet });
 
+			//Nb tweets in db
 			currentCount++;
 
 			if(currentCount == limit){
@@ -45,8 +75,8 @@ module.exports = function (server)
 				currentCount = limit - 1;
 			}
 
+			//Set new tweet entry to save
 			var lTweet = new localTweet();
-
 			lTweet.timestamp = tweet.timestamp_ms;
 			lTweet.hashtag = [];
 
@@ -60,23 +90,36 @@ module.exports = function (server)
 			});
 		});
 
+		/**
+		 * Get last five tweets of a specific user to show a preview of his timeline
+		 * Envent emited on tweet circle click from map
+		 * Send data via socket.io
+		 */
 	    socket.on("require_user_timeline", function (data) {
+	    	console.log('require tweets for user');
 	        tweets.get('statuses/user_timeline', {screen_name: data.screen_name, count: 5, include_rts: 0 }, function(err, data, response) {
 	        	socket.emit("require_user_timeline_response", { tweets: data });
 	        });
 	    });
 
-	    socket.on('disconnect', function () {
+		socket.on('disconnect', function () {
 		    console.log('socket io disconnected');
 		    socket.conn.close();
 		});
 	});
 
 	/**
-	 * GET '/'
+	 * GET '/tweets'
 	 */
-	router.get('/', function(req, res, next) {
+	router.get('/tweets', function(req, res, next) {
 	  	res.status('200').render('tweets/index');
+	});
+
+	/**
+	 * GET '/shootings'
+	 */
+	router.get('/shootings', function(req, res, next) {
+		res.status('200').render('shootings/index');
 	});
 
 	return router;
