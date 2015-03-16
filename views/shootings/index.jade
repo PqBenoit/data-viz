@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+	script(src='/javascripts/raphael.js')
+	section.shootings-page
+		include ../nav
+		
+		section(id="container", class="shootings")
+			div(id="map")
+
+	script(src='/javascripts/map.js')
+	script(src='/javascripts/shooting.js')
+	script(type='text/javascript').
+		$(document).ready(function() {
+			Map.init();
+			console.log(#{data});
+			Shooting.init();
+		});

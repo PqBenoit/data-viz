@@ -38,7 +38,6 @@ module.exports = function (server)
 
 			currentCount++;
 
-
 			if(currentCount == limit){
 				localTweet.findOne({}, {}, {sort:{'created_at': 1}}, function(err, result){
 					result.remove();

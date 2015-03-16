@@ -5,36 +5,33 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
-
-var mongoose = require('mongoose');
-
-var mongolabStringConnexion = 'mongodb://root:root-kikeriki@ds039231.mongolab.com:39231/kikeriki';
-
-mongoose.connect(mongolabStringConnexion);
-
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error'));
-db.once('open', function callback(){
-    console.log('Connection establish to: mongolab');
-});
-
 
 var http = require('http');
 
 /**
-* Get port from environment and store in Express.
-*/
+ * Get port from environment and store in Express app.
+ * @use ./bin/www
+ */
 app.port = normalizePort(process.env.PORT || '3000');
 
 /**
-* Create HTTP server.
+* Create HTTP server and store in Express app.
+* @use ./bin/wwww
 */
 app.server = http.createServer(app);
+
+/**
+ * MONGOLAB Connection
+ */
+var mongoose = require('mongoose');
+var mongolabStringConnexion = 'mongodb://root:root-kikeriki@ds039231.mongolab.com:39231/kikeriki';
+mongoose.connect(mongolabStringConnexion);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function callback(){
+    console.log('Connection establish to: mongolab');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,10 +45,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * Routes
+ * @see ./routes/
+ */
+var routes = require('./routes/index');
+var tweets = require('./routes/tweets')(app.server);
+var shootings = require('./routes/shootings')();
 app.use('/', routes);
-app.use('/users', users);
-var tweet = require('./routes/tweets')(app.server);
-app.use('/tweets', tweet);
+app.use('/tweets', tweets);
+app.use('/shootings', shootings);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
