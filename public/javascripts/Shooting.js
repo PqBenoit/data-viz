@@ -14,7 +14,7 @@ var Shooting = (function(my, Map, io, $)
 	 * Listen 'tweet' socket.io event
 	 * @return void
 	 */
-	my.setupShootingPlaces = function (data)
+	my.setupShootingPlaces = function ()
 	{
 		my.socket.on('shootings', function(data){
 			console.log(data);
@@ -43,11 +43,11 @@ var Shooting = (function(my, Map, io, $)
 	 * Init Tweet Module
 	 * return void
 	 */
-	my.init = function (data)
+	my.init = function ()
 	{
 		console.log('init Shooting Module');
 		my.socket.emit('require_shootings');
-		my.setupShootingPlaces(data);
+		my.setupShootingPlaces();
 	};
 
 
