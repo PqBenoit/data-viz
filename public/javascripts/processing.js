@@ -15,7 +15,7 @@ function draw(){
   noFill();
   strokeCap(SQUARE);
 
-  var ellipseSize = 200;
+  var ellipseSize = 300;
   var strokeSize = 60;
 
   for(var j=0; j<filteredTrees.length; j++){
@@ -28,7 +28,7 @@ function draw(){
       stroke(element.color.red, element.color.green, element.color.blue);
       arc(width/2, height/2, ellipseSize, ellipseSize, radBegin, rad);
     }
-    ellipseSize += (strokeSize*2);
+    ellipseSize += Math.round(strokeSize*2.2);
     strokeSize *= 0.9;
   }
 };
