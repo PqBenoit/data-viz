@@ -1,7 +1,21 @@
 /**
  * Tweet, shootings and tree stats graph
  */
+.container.stats h1 {
+	color: #ffffff;
+}
+.container.stats h2 {
+	color: #ffffff;
+	text-align: center;
+	font-size: 1.2em;
+	margin: 20px auto 20px auto;
+	width: 600px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #ffffff;
+}
+.container.stats canvas {
 
+}
 .flot-text {
 	color: #ffffff !important;
 }
@@ -9,17 +23,16 @@
 	top: 10px !important;
 }
 .flot-y-axis {
-	left: -10px !important;
+	left: -40px !important;
 }
 #nb-tweets {
-	display: inline-block;
-	width: 48%;
-	margin: 100px 1% 0 1%;
+	width: 600px;
+	height: 300px;
+	margin: 30px auto 60px auto;
 }
 #top-hashtags {
-	display: inline-block;
-	width: 48%;
-	margin: 100px 1% 0 1%;
+	width: 600px;
+	margin: 50px auto 0 auto;
 }
 #top1-graph, #top1-name, #top2-graph, #top2-name,  #top3-graph, #top3-name  {
 	display: inline-block;
@@ -27,6 +40,9 @@
 	text-align: center;
 	color: #ffffff;
 	font-size: 1.2em;
+}
+#top1-name, #top2-name, #top3-name {
+	margin-bottom: 20px;
 }
 #top1-graph {
 	background: #fff;

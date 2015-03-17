@@ -13,8 +13,8 @@ var Map = (function(my, Config, $){
    * @return void
    */
   my.setSize = function (){
-    var wWidth = ($(window).width()-15);
-    var wHeight = ($(window).height()-15);
+    var wWidth = ($(window).width()-64);
+    var wHeight = ($(window).height()-170);
 
     my.$mapContainer.css('width', wWidth+'px');
     my.$mapContainer.css('height', wHeight+'px');

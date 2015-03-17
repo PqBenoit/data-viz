@@ -17,11 +17,15 @@ block content
 				h2(class="timeline-button") Timeline&nbsp;
 					i(class="fa fa-plus-square-o")
 				div(class="tweet-timeline")
+			div(id="button-stats-loader")
+			button(class="show-stats-button" id="load-stats") 
+				i(class="fa fa-bar-chart") 
+				span &nbsp;Statistiques
 
 		section(class="container stats")
-			h1 Statistiques 
-				i(class="fa fa-refresh")
-			section(id="nb-tweets", style="width:48%;height:300px;")
+			h2 Nombre de tweets répartient par heures sur les 500 000 derniers tweets de paris
+			section(id="nb-tweets")
+			h2 Les trois premiers hastags sur les 500 000 derniers tweets de paris
 			section(id="top-hashtags")
 				div(id="top1-name")
 				div(id="top2-name")
@@ -40,6 +44,6 @@ block content
 			$(document).ready(function() {
 				Sidebar.init();
 				Map.init();
-				TweetGraph.init();
 				Tweet.init();
+				TweetGraph.init();
 			});

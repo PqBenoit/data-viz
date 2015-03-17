@@ -12,6 +12,7 @@ var TweetGraph = (function(my, io, $)
 	my.dataset =  [];
 	my.options = {};
 	my.hashtagsArray = {init: 0};
+	my.hastagSort = [];
 
 	/**
 	 * Init graph options, construct data array, then build graph
@@ -35,7 +36,10 @@ var TweetGraph = (function(my, io, $)
 					my.data.push([hour, data[hour]]);
 				}
 		}
+	};
 
+	my.getBuildGraph = function ()
+	{
 		my.options = {
 		    series: {
                 bars: {
@@ -45,9 +49,7 @@ var TweetGraph = (function(my, io, $)
             bars: {
                 align: "center",
                 barWidth: 0.5,
-                vertical: true,
-                fillColor: { colors: [{ opacity: 1 }, { opacity: 1}] },
-                lineWidth: 1
+                fillColor: { colors: [{ opacity: 1 }, { opacity: 1}] }
             },
 		    xaxis: {
 		    	color: "black",
@@ -64,11 +66,13 @@ var TweetGraph = (function(my, io, $)
 		        axisLabelUseCanvas: true
 		    },
 		    legend: {        
-		        labelBoxBorderColor: "#000000"
+		        show: false
 		    },
 		    grid: {                
 		        backgroundColor: "#000000",
-		        tickColor: "#000000"
+		        tickColor: "#000000",
+		        borderWidth: 0,
+		        hoverable: true
 		    }
 		};
 
@@ -98,28 +102,6 @@ var TweetGraph = (function(my, io, $)
 				my.buildHashtagsArray(hashtags[0]);
 			}
 		}
-
-		var total = 0;
-		var hastagSort = [];
-		for (var hashtag in my.hashtagsArray) {
-		    hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
-		    total += my.hashtagsArray[hashtag];
-		}
-
-		hastagSort.sort(function(a, b) {return b[1] - a[1]});
-
-		var top1 = Math.round((hastagSort[0][1]/total)*10000);
-		$('#top1-graph').css('height', top1+'px');
-		$('#top1-name').text('#'+hastagSort[0][0]+' - '+top1);
-
-		var top2 = Math.round((hastagSort[1][1]/total)*10000);
-		$('#top2-graph').css('height', top2+'px');
-		$('#top2-name').text('#'+hastagSort[1][0]+' - '+top2);
-
-		var top3 = Math.round((hastagSort[2][1]/total)*10000);
-		$('#top3-graph').css('height', top3+'px');
-		$('#top3-name').text('#'+hastagSort[2][0]+' - '+top3);
-
 	};
 
 	/**
@@ -134,7 +116,30 @@ var TweetGraph = (function(my, io, $)
 		} else {
 			my.hashtagsArray[hashtag] = 1;
 		}
-	}
+	};
+
+	my.getTopHashtag = function ()
+	{
+		var total = 0;
+		for (var hashtag in my.hashtagsArray) {
+		    my.hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
+		    total += my.hashtagsArray[hashtag];
+		}
+
+		my.hastagSort.sort(function(a, b) {return b[1] - a[1]});
+
+		var top1 = Math.round((my.hastagSort[0][1]/total)*10000);
+		$('#top1-graph').css('height', top1+'px');
+		$('#top1-name').text('#'+my.hastagSort[0][0]+' - '+top1);
+
+		var top2 = Math.round((my.hastagSort[1][1]/total)*10000);
+		$('#top2-graph').css('height', top2+'px');
+		$('#top2-name').text('#'+my.hastagSort[1][0]+' - '+top2);
+
+		var top3 = Math.round((my.hastagSort[2][1]/total)*10000);
+		$('#top3-graph').css('height', top3+'px');
+		$('#top3-name').text('#'+my.hastagSort[2][0]+' - '+top3);
+	};
 
 	/**
 	 * Init TweetGraph Module
@@ -142,14 +147,33 @@ var TweetGraph = (function(my, io, $)
 	 */
 	my.init = function ()
 	{
+		$("#button-stats-loader").css('display', "block");
 		console.log('init TweetGraph Module');
 
-		my.socket.emit('require_tweets_graph');
+		my.socket.emit('require_tweets_graph_hashtags');
+		my.socket.emit('require_tweets_graph_nb');
 
-		my.socket.removeAllListeners("response_tweets_graph");
-		my.socket.on('response_tweets_graph', function(res){
-			my.buildGraph(res);
+		my.socket.removeAllListeners("response_tweets_graph_h");
+		my.socket.on('response_tweets_graph_h', function(res){
 			my.topHashtag(res);
+		});
+
+		my.socket.removeAllListeners("response_tweets_graph_nb");
+		my.socket.on('response_tweets_graph_nb', function(res){
+			my.buildGraph(res);
+			$("#button-stats-loader").css('display', "none");
+			$(".show-stats-button").css('display', "block");
+		});
+
+		$('#load-stats').click(function(){
+			if ($('.container.stats').css('display') != 'block') {
+				my.getTopHashtag();
+				my.getBuildGraph();
+				$('.container.stats').css('display', 'block');
+			}
+			var offset = $(window).height();
+			options = { scrollTop: offset };
+			$('html').animate(options, 1000);
 		});
 	};
 

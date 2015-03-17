@@ -53,6 +53,7 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 	{
 		console.log('init Tweet Module');
 		my.startStream();
+
 		$('.fa-close').click(function(){
 			Sidebar.close();
 		});
