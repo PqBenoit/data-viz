@@ -36,6 +36,7 @@ var Shooting = (function(my, Map, io, $)
 				}
 			}
 			console.log('shootings placed');
+			
 		});
 	};
 
