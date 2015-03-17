@@ -8,6 +8,8 @@ var Shooting = require('../model/shooting');
 var limit = 500000;
 var currentCount = 0;
 
+var titles = [];
+
 /**
  * Routes for data viz
  * @param server, to init socket.io
@@ -51,11 +53,17 @@ module.exports = function (server)
 		 */
 	    socket.on("require_shootings", function () {
 	    	console.log('require shootings db for map');
-			Shooting.find({}, '-_id -__v -recordid -datasetid -date_debut_evenement', function(err, data){
-				if(!err) {
-					socket.emit('shootings', {data: data});
-				}
-			});
+
+	    	Shooting.distinct("fields.titre", function(err, data){
+	    		if(!err)
+	    			titles = data;
+	    		for(var i = 0; i < titles.length; i++){
+	    			Shooting.findOne({"fields.titre": data[i]}, function(err, data){
+	    				socket.emit('shootings', {data: data});
+	    			});
+	    		}
+	    	});
+	    	
 	    });
 
 	    localTweet.count({}, function(err, c){
