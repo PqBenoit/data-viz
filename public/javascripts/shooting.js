@@ -17,24 +17,26 @@ var Shooting = (function(my, Map, io, $)
 	my.setupShootingPlaces = function ()
 	{
 		my.socket.on('shootings', function(data){
-			console.log(data);
-			var circle = undefined;
+		console.log(data.data);
+		var circle = undefined;
 
-			for (var i = 0, j = data.data.length ; i < j ; i++) {
-				circle = undefined;
+		var pos = Map.getPixelPosition(Map.rsr, data.data.fields.geo_coordinates.lng, data.data.fields.geo_coordinates.lat);
 
-				if (null != data.data[i].fields.geo_coordinates) {
-					var pos = Map.getPixelPosition(Map.rsr, data.data[i].fields.geo_coordinates.lng, data.data[i].fields.geo_coordinates.lat);
+		circle = Map.rsr.circle(pos.x, pos.y, 10);
+		circle.attr('fill', '#4099FF');
+		circle.attr('stroke', 'none');
 
-					circle = Map.rsr.circle(pos.x, pos.y, 10);
-					circle.attr('fill', '#4099FF');
-					circle.attr('stroke', 'none');
+
+			// for (var i = 0, j = data.data.length ; i < j ; i++) {
+			// 	circle = undefined;
+
+			// 	if (null != data.data[i].fields.geo_coordinates) {
 					
-					// $(circle.node).click(function(){
-					// 	Sidebar.open($(this).offset().left, $(this).offset().top, data);
-					// });
-				}
-			}
+			// 		// $(circle.node).click(function(){
+			// 		// 	Sidebar.open($(this).offset().left, $(this).offset().top, data);
+			// 		// });
+			// 	}
+			// }
 			console.log('shootings placed');
 
 		});
