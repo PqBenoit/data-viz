@@ -42,7 +42,6 @@ var Shooting = (function(my, Map, io, $)
 				circle.attr('fill', '#000000');
 				circle.attr('stroke', 'none');
 			}
-
 			console.log('new shootings placed');
 		});
 	};

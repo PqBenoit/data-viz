@@ -82,13 +82,9 @@ module.exports = function (server)
 		});
 
 		socket.on('titleClicked', function(request){
-			// Shooting.find({"fields.titre": "INCONTROLABLE"}, function(err, data){
-			// 	socket.emit('shootings', {data: data});
-			// });
 			Shooting.find({"fields.titre": request.title}, function(err, data){
 				socket.emit('shootingClicked', data);
 			});
-
 		});
 
 	    /**
