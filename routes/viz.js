@@ -1,12 +1,15 @@
 var express = require('express');
-var router = express.Router();
-var Twit = require('twit');
+var router 	= express.Router();
+var Twit 	= require('twit');
 
-var localTweet = require('../model/tweet');
-var Shooting = require('../model/shooting');
+var localTweet 	= require('../model/tweet');
+var Hashtag 	= require('../model/hashtag');
+var Nbtweet 	= require('../model/nbtweet');
+var Shooting 	= require('../model/shooting');
+var time 		= require('time');
 
-var limit = 500000;
-var currentCount = 0;
+var limit 			= 500000;
+var currentCount 	= 0;
 
 var titles = [];
 
@@ -40,10 +43,10 @@ module.exports = function (server)
 		 * Get hashtag data for tweets graph viz
 		 * Send data via socket.io
 		 */
+		socket.removeAllListeners('require_tweets_graph_hashtags');
 		socket.on("require_tweets_graph_hashtags", function () {
-			console.log('require tweets db for graph');
-			localTweet.find({hashtag: {$gt: []}}, '-timestamp', function(err, res){
-				socket.emit('response_tweets_graph_h', {lTweetGraph: res});
+			Hashtag.find({}, function(err, res){
+				socket.emit('response_tweets_graph_h', {hashtags: res});
 			});
 	    });
 
@@ -51,10 +54,10 @@ module.exports = function (server)
 		 * Get timestamp data for tweets graph viz
 		 * Send data via socket.io
 		 */
+		socket.removeAllListeners("require_tweets_graph_nb");
 		socket.on("require_tweets_graph_nb", function () {
-			console.log('require tweets db for graph');
-			localTweet.find({}, '-hashtag', function(err, res){
-				socket.emit('response_tweets_graph_nb', {lTweetGraph: res});
+			Nbtweet.find({}, function(err, res){
+				socket.emit('response_tweets_graph_nb', {nbtweet: res});
 			});
 	    });
 
@@ -95,6 +98,7 @@ module.exports = function (server)
 
 			if(currentCount == limit){
 				localTweet.findOne({}, {}, {sort:{'created_at': 1}}, function(err, result){
+					// Remove from stat
 					result.remove();
 				});			
 				currentCount = limit - 1;
@@ -105,13 +109,43 @@ module.exports = function (server)
 			lTweet.timestamp = tweet.timestamp_ms;
 			lTweet.hashtag = [];
 
+			var m = new time.Date();
+			m.setTimezone("France/Paris");
+			m.setMilliseconds(tweet.timestamp_ms);
+			tHour = new Date(m).getHours();
+			console.log(tHour);
+			Nbtweet.findOne({hour: tHour}, function(err, res){
+				if (res) {
+					res.nb++;
+					res.save();
+				} else {
+					var nbtweet = new Nbtweet();
+					nbtweet.hour = tHour;
+					nbtweet.nb = 1;
+					nbtweet.save();
+				}
+			})
+
 			for(var i = 0; i < tweet.entities.hashtags.length; i++){
-				lTweet.hashtag.push(tweet.entities.hashtags[i].text);
+				var hName = tweet.entities.hashtags[i].text;
+				Hashtag.findOne({name: hName}, function(err, res){
+					if (res) {
+						res.nb++;
+						res.save();
+					} else {
+						var hashtag = new Hashtag();
+						hashtag.name = hName;
+						hashtag.nb = 1;
+						hashtag.save();
+					}
+				});
+
+				lTweet.hashtag.push(hName);
 			}
 
 			lTweet.save(function(err, result){
-				if(!err)
-					console.log(currentCount);
+				// if(!err)
+				// 	console.log(currentCount);
 			});
 		});
 
@@ -137,6 +171,13 @@ module.exports = function (server)
 	 * GET '/tweets'
 	 */
 	router.get('/tweets', function(req, res, next) {
+		//Set new stat entry to save
+		Hashtag.find({}, function(err, res){
+			console.log(res);
+		});
+		Nbtweet.find({}, function(err, res){
+			console.log(res);
+		});
 	  	res.status('200').render('tweets/index');
 	});
 

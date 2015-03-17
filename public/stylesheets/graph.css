@@ -13,9 +13,6 @@
 	padding-bottom: 5px;
 	border-bottom: 1px solid #ffffff;
 }
-.container.stats canvas {
-
-}
 .flot-text {
 	color: #ffffff !important;
 }
@@ -26,7 +23,7 @@
 	left: -40px !important;
 }
 #nb-tweets {
-	width: 600px;
+	width: 560px;
 	height: 300px;
 	margin: 30px auto 60px auto;
 }

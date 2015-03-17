@@ -31,7 +31,7 @@
     background-size: 30px;
     width: 30px;
     height: 30px;
-    margin: 30px auto 0 auto;
+    margin: 40px auto 0 auto;
 }
 .show-stats-button {
     display: none;
@@ -44,7 +44,7 @@
     font-family: 'Source Sans Pro', arial, sans-serif;
     text-align: center;
     cursor: pointer;
-    margin: 30px auto 0 -75px;
+    margin: 40px auto 0 -75px;
 }
 .tweet-slide {
     background: #000000;
