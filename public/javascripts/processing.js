@@ -14,7 +14,6 @@ function draw(){
   background(255, 255, 255);
   noFill();
   strokeCap(SQUARE);
-  smooth();
 
   var ellipseSize = 200;
   var strokeSize = 60;
@@ -25,7 +24,7 @@ function draw(){
     for(var i =0; i < filteredTrees[j].trees.length; i++){
       var element = filteredTrees[j].trees[i];
       var radBegin = rad;
-      rad += (element.nbr/filteredTrees[j].rangeNbr)*(2*Math.PI);
+      rad += (element.nbr/filteredTrees[j].rangeNbr)*(2*PI);
       stroke(element.color.red, element.color.green, element.color.blue);
       arc(width/2, height/2, ellipseSize, ellipseSize, radBegin, rad);
     }
