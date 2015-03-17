@@ -16,31 +16,57 @@ var Shooting = (function(my, Map, io, $)
 	 */
 	my.setupShootingPlaces = function ()
 	{
+		$list = $('#movies-list').find('ul');
+
 		my.socket.on('shootings', function(data){
-		console.log(data.data);
-		var circle = undefined;
+			// console.log(data);
+			var circle = undefined;
 
-		var pos = Map.getPixelPosition(Map.rsr, data.data.fields.geo_coordinates.lng, data.data.fields.geo_coordinates.lat);
+			var pos = Map.getPixelPosition(Map.rsr, data.data.fields.geo_coordinates.lng, data.data.fields.geo_coordinates.lat);
 
-		circle = Map.rsr.circle(pos.x, pos.y, 10);
-		circle.attr('fill', '#4099FF');
-		circle.attr('stroke', 'none');
+			circle = Map.rsr.circle(pos.x, pos.y, 10);
+			circle.attr('fill', '#4099FF');
+			circle.attr('stroke', 'none');
 
-
-			// for (var i = 0, j = data.data.length ; i < j ; i++) {
-			// 	circle = undefined;
-
-			// 	if (null != data.data[i].fields.geo_coordinates) {
-					
-			// 		// $(circle.node).click(function(){
-			// 		// 	Sidebar.open($(this).offset().left, $(this).offset().top, data);
-			// 		// });
-			// 	}
-			// }
 			console.log('shootings placed');
 
+			$list.append('<li class="list-item">' + data.data.fields.titre + '</li>');
+		});
+
+		my.socket.on('shootingClicked', function(data){
+			console.log(data);
+			$('circle').remove();
+			for (var i = 0, j = data.length ; i < j ; i++) {
+				var pos = Map.getPixelPosition(Map.rsr, data[i].fields.geo_coordinates.lng, data[i].fields.geo_coordinates.lat);
+				circle = Map.rsr.circle(pos.x, pos.y, 10);
+				circle.attr('fill', '#000000');
+				circle.attr('stroke', 'none');
+			}
+
+			console.log('new shootings placed');
 		});
 	};
+
+	/**
+	*  
+	* 
+	* 
+	*/
+	my.queryShootingListElement = function()
+	{
+		console.log('list ready');
+		$('.list-item').click(function(){
+			$('#movies-list').animate({
+				left: '-100%'
+			}, 500);
+			$('#list-button').animate({
+				opacity: '1'
+			}, 1000);
+			var title = $(this).html();
+			console.log(title);
+			my.socket.emit('titleClicked', {title: title});
+		});
+	}
 
 	/**
 	 * Init Tweet Module
@@ -51,6 +77,10 @@ var Shooting = (function(my, Map, io, $)
 		console.log('init Shooting Module');
 		my.socket.emit('require_shootings');
 		my.setupShootingPlaces();
+		setTimeout(function(){
+			my.queryShootingListElement();
+		}, 5000);
+		my.resetList();
 	};
 
 
