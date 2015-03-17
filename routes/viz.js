@@ -37,13 +37,24 @@ module.exports = function (server)
 		console.log('connection socket io');
 
 		/**
-		 * Get data for tweets graph viz
+		 * Get hashtag data for tweets graph viz
 		 * Send data via socket.io
 		 */
-		socket.on("require_tweets_graph", function () {
+		socket.on("require_tweets_graph_hashtags", function () {
 			console.log('require tweets db for graph');
-			localTweet.find({}, function(err, res){
-				socket.emit('response_tweets_graph', {lTweetGraph: res});
+			localTweet.find({hashtag: {$gt: []}}, '-timestamp', function(err, res){
+				socket.emit('response_tweets_graph_h', {lTweetGraph: res});
+			});
+	    });
+
+	    /**
+		 * Get timestamp data for tweets graph viz
+		 * Send data via socket.io
+		 */
+		socket.on("require_tweets_graph_nb", function () {
+			console.log('require tweets db for graph');
+			localTweet.find({}, '-hashtag', function(err, res){
+				socket.emit('response_tweets_graph_nb', {lTweetGraph: res});
 			});
 	    });
 
