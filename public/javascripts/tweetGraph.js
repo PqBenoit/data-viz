@@ -35,7 +35,7 @@ var TweetGraph = (function(my, io, $)
 					my.data.push([hour, data[hour]]);
 				}
 		}
-		console.log(my.data);
+
 		my.options = {
 		    series: {
                 bars: {
@@ -46,7 +46,7 @@ var TweetGraph = (function(my, io, $)
                 align: "center",
                 barWidth: 0.5,
                 vertical: true,
-                fillColor: { colors: [{ opacity: 0.5 }, { opacity: 1}] },
+                fillColor: { colors: [{ opacity: 1 }, { opacity: 1}] },
                 lineWidth: 1
             },
 		    xaxis: {
@@ -64,18 +64,18 @@ var TweetGraph = (function(my, io, $)
 		        axisLabelUseCanvas: true
 		    },
 		    legend: {        
-		        labelBoxBorderColor: "#ffffff"
+		        labelBoxBorderColor: "#000000"
 		    },
 		    grid: {                
-		        backgroundColor: "#ffffff",
-		        tickColor: "#aaaaaa"
+		        backgroundColor: "#000000",
+		        tickColor: "#000000"
 		    }
 		};
 
 		//Build first graph param array
-		my.dataset.push({ label: "Nombre de tweets répartient par heures", data: my.data, color: "#333333" });
+		my.dataset.push({ label: "Nombre de tweets répartient par heures", data: my.data, color: "#ffffff" });
 
-	    $.plot($("#flot-placeholder1"), my.dataset, my.options);
+	    $.plot($("#nb-tweets"), my.dataset, my.options);
 	};
 
 	/**
@@ -99,21 +99,26 @@ var TweetGraph = (function(my, io, $)
 			}
 		}
 
+		var total = 0;
 		var hastagSort = [];
 		for (var hashtag in my.hashtagsArray) {
 		    hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
+		    total += my.hashtagsArray[hashtag];
 		}
 
 		hastagSort.sort(function(a, b) {return b[1] - a[1]});
 
-		$('#top1-graph').css('height', hastagSort[0][1]+'px');
-		$('#top1-name').text('#'+hastagSort[0][0]);
+		var top1 = Math.round((hastagSort[0][1]/total)*10000);
+		$('#top1-graph').css('height', top1+'px');
+		$('#top1-name').text('#'+hastagSort[0][0]+' - '+top1);
 
-		$('#top2-graph').css('height', hastagSort[1][1]+'px');
-		$('#top2-name').text('#'+hastagSort[1][0]);
+		var top2 = Math.round((hastagSort[1][1]/total)*10000);
+		$('#top2-graph').css('height', top2+'px');
+		$('#top2-name').text('#'+hastagSort[1][0]+' - '+top2);
 
-		$('#top3-graph').css('height', hastagSort[2][1]+'px');
-		$('#top3-name').text('#'+hastagSort[2][0]);
+		var top3 = Math.round((hastagSort[2][1]/total)*10000);
+		$('#top3-graph').css('height', top3+'px');
+		$('#top3-name').text('#'+hastagSort[2][0]+' - '+top3);
 
 	};
 
@@ -131,7 +136,6 @@ var TweetGraph = (function(my, io, $)
 		}
 	}
 
-
 	/**
 	 * Init TweetGraph Module
 	 * @return void
@@ -148,7 +152,6 @@ var TweetGraph = (function(my, io, $)
 			my.topHashtag(res);
 		});
 	};
-
 
 	return my;
 
