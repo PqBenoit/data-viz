@@ -45,9 +45,7 @@ var TweetGraph = (function(my, io, $)
             bars: {
                 align: "center",
                 barWidth: 0.5,
-                vertical: true,
-                fillColor: { colors: [{ opacity: 1 }, { opacity: 1}] },
-                lineWidth: 1
+                fillColor: { colors: [{ opacity: 1 }, { opacity: 1}] }
             },
 		    xaxis: {
 		    	color: "black",
@@ -68,7 +66,9 @@ var TweetGraph = (function(my, io, $)
 		    },
 		    grid: {                
 		        backgroundColor: "#000000",
-		        tickColor: "#000000"
+		        tickColor: "#000000",
+		        borderWidth: 0,
+		        hoverable: true
 		    }
 		};
 

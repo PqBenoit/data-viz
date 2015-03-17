@@ -12,14 +12,12 @@
 	left: -10px !important;
 }
 #nb-tweets {
-	display: inline-block;
-	width: 48%;
-	margin: 100px 1% 0 1%;
+	width: 50%;
+	margin: 30px auto 0 auto;
 }
 #top-hashtags {
-	display: inline-block;
-	width: 48%;
-	margin: 100px 1% 0 1%;
+	width: 50%;
+	margin: 50px auto 0 auto;
 }
 #top1-graph, #top1-name, #top2-graph, #top2-name,  #top3-graph, #top3-name  {
 	display: inline-block;
@@ -27,6 +25,9 @@
 	text-align: center;
 	color: #ffffff;
 	font-size: 1.2em;
+}
+#top1-name, #top2-name, #top3-name {
+	margin-bottom: 20px;
 }
 #top1-graph {
 	background: #fff;
