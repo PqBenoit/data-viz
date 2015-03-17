@@ -36,7 +36,7 @@ var Shooting = (function(my, Map, io, $)
 				}
 			}
 			console.log('shootings placed');
-			
+
 		});
 	};
 
@@ -53,4 +53,5 @@ var Shooting = (function(my, Map, io, $)
 
 
 	return my;
+	
 }(Shooting || {}, Map || {}, io || {}, jQuery));

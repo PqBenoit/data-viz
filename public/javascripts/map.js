@@ -121,4 +121,5 @@ var Map = (function(my, Config, $){
   };
 
   return my;
+  
 }(Map || {}, Config || {}, jQuery));
