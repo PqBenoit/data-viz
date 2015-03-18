@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  * @see ./routes/
  */
 var routes = require('./routes/index');
-var viz = require('./routes/viz')(app.server);
+var viz = require('./routes/viz')();
 app.use('/', routes);
 app.use('/', viz);
 
