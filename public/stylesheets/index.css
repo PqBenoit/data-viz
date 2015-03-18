@@ -52,14 +52,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c9fc4', end
   text-transform: uppercase;
   font-weight: 400;
   font-size: 2em;
-  -moz-transition: all 0.4s ease;
-  -webkit-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  transition: all 0.4s ease;
+  -moz-transition: all 0.6s ease-in-out;
+  -webkit-transition: all 0.6s ease-in-out;
+  -o-transition: all 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
   text-decoration: none;
 }
 .home .button a:hover {
   text-decoration: none;
   background: #ffffff;
-  color: #000000;
+  color: #00b9a2;
+  border: 1px solid #00b9a2;
 }
