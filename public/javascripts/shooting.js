@@ -39,7 +39,7 @@ var Shooting = (function(my, Map, io, $)
 			var pos = Map.getPixelPosition(Map.rsr, data.data.fields.geo_coordinates.lng, data.data.fields.geo_coordinates.lat);
 
 			circle = Map.rsr.circle(pos.x, pos.y, 10);
-			circle.attr('fill', '#4099FF');
+			circle.attr('fill', '#2c9fc4');
 			circle.attr('stroke', 'none');
 
 			console.log('shootings placed');			
@@ -65,7 +65,7 @@ var Shooting = (function(my, Map, io, $)
 			for (var i = 0, j = data.length ; i < j ; i++) {
 				var pos = Map.getPixelPosition(Map.rsr, data[i].fields.geo_coordinates.lng, data[i].fields.geo_coordinates.lat);
 				circle = Map.rsr.circle(pos.x, pos.y, 10);
-				circle.attr('fill', '#000000');
+				circle.attr('fill', '#2c9fc4');
 				circle.attr('stroke', 'none');
 			}
 			console.log('new shootings placed');
