@@ -115,18 +115,16 @@ var TweetGraph = (function(my, io, helpers, $)
 				my.socket.emit('require_tweets_graph_nb');
 
 				my.socket.on('response_tweets_graph_nb', function(res){
-					console.log('stats response 1');
 					my.buildGraph(res);
 					my.socket.emit('require_tweets_graph_hashtags');
 					my.socket.on('response_tweets_graph_h', function(res){
-						console.log('stats response 2');
 						my.topHashtag(res);
 						$("#button-stats-loader").css('display', "none");
 						$(".show-stats-button").css('display', "block");
 						$('.container.stats').css('display', 'block');
+						options = { scrollTop: offset };
+						$('html').animate(options, 2000);
 					});
-					options = { scrollTop: offset };
-					$('html').animate(options, 2000);
 				});
 			} else {
 				options = { scrollTop: offset };
