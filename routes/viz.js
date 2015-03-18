@@ -9,7 +9,8 @@ var Shooting 	= require('../model/shooting');
 var time 		= require('time');
 
 var limit 			= 500000;
-var currentCount 	= 0;
+var currentCountNbTweet 	= 0;
+var currentCountNbHashtags 	= 0;
 
 var titles = [];
 
@@ -39,6 +40,20 @@ module.exports = function (server)
 	io.on("connection", function(socket){
 		console.log('connection socket io');
 
+		localTweet.count({}, function(err, c){
+	    	if(!err) {
+	    		console.log('count tweets db : '+c);
+				currentCountNbTweet = c;
+	    	}
+		});
+
+		Hashtag.count({}, function(err, c){
+	    	if(!err) {
+	    		console.log('count hashtags db : '+c);
+				currentCountNbHashtags = c;
+	    	}
+		});
+
 		/**
 		 * Get hashtag data for tweets graph viz
 		 * Send data via socket.io
@@ -51,7 +66,7 @@ module.exports = function (server)
 				    var name = res[i].name;
 				    counts[name] = counts[name] ? counts[name]+1 : 1;
 				}
-				socket.emit('response_tweets_graph_h', {hashtags: counts});
+				socket.emit('response_tweets_graph_h', {hashtags: counts, nbhashtag: currentCountNbHashtags});
 			});
 	    });
 
@@ -67,7 +82,7 @@ module.exports = function (server)
 				    var hour = res[i].hour;
 				    counts[hour] = counts[hour] ? counts[hour]+1 : 1;
 				}
-				socket.emit('response_tweets_graph_nb', {nbtweet: counts});
+				socket.emit('response_tweets_graph_nb', {nbtweet: counts, nb: currentCountNbTweet});
 			});
 	    });
 
@@ -89,13 +104,6 @@ module.exports = function (server)
 	    	});
 	    });
 
-	 //    localTweet.count({}, function(err, c){
-	 //    	if(!err) {
-	 //    		console.log('count tweets db');
-		// 		currentCount = c;
-	 //    	}
-		// });
-
 		socket.on('titleClicked', function(request){
 			Shooting.find({"fields.titre": request.title}, function(err, data){
 				socket.emit('shootingClicked', data);
@@ -111,14 +119,25 @@ module.exports = function (server)
 			socket.emit('tweet', { tweet: tweet });
 
 			//Nb tweets in db
-			currentCount++;
+			currentCountNbTweet++;
+			currentCountNbHashtags++;
 
-			if(currentCount == limit){
-				localTweet.findOne({}, {}, {sort:{'created_at': 1}}, function(err, result){
-					// Remove from stat
-					result.remove();
-				});			
-				currentCount = limit - 1;
+			if(currentCountNbTweet == limit){
+				localTweet.findOne({}, {}, {$sort:{'created_at': 1}}).exec(function(err, doc){
+					doc.remove();
+				});
+				Nbtweet.findOne({}, {}, {$sort:{'created_at': 1}}).exec(function(err, doc){
+					doc.remove();
+				});
+				
+				currentCountNbTweet = limit - 1;
+			}
+
+			if (currentCountNbHashtags == limit) {
+				Hashtag.findOne({}, {}, {$sort:{'created_at': 1}}).exec(function(err, doc){
+					doc.remove();
+				});
+				currentCountNbHashtags = limit - 1;
 			}
 
 			//Set new tweet entry to save

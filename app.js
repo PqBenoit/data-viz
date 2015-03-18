@@ -25,7 +25,7 @@ app.server = http.createServer(app);
  * MONGOLAB Connection
  */
 var mongoose = require('mongoose');
-var mongolabStringConnexion = 'localhost:27017';
+var mongolabStringConnexion = 'mongodb://root:root-kikeriki@ds039231.mongolab.com:39231/kikeriki';
 mongoose.connect(mongolabStringConnexion);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));

@@ -69,6 +69,7 @@ var TweetGraph = (function(my, io, helpers, $)
 		my.dataset.push({ label: "Nombre de tweets répartient par heures", data: my.data, color: "#ffffff" });
 
 	    $.plot($("#nb-tweets"), my.dataset, my.options);
+	    $('#nbtweet').html(res.nb);
 	};
 
 	/**
@@ -83,8 +84,6 @@ var TweetGraph = (function(my, io, helpers, $)
 		}
 		my.hashtagSort = helpers.sortObject(res.hashtags);
 
-		console.log(my.hashtagSort);
-
 		var top1 = my.hashtagSort[0].value;
 		$('#top1-graph').css('height', (Math.round((top1/total)*1000))+'px');
 		$('#top1-name').text('#'+my.hashtagSort[0].key+' - '+top1);
@@ -96,8 +95,14 @@ var TweetGraph = (function(my, io, helpers, $)
 		var top3 = my.hashtagSort[2].value;
 		$('#top3-graph').css('height', (Math.round((top3/total)*1000))+'px');
 		$('#top3-name').text('#'+my.hashtagSort[2].key+' - '+top3);
+
+		$('#nbhashtag').html(res.nbhashtag);
 	};
 
+	/**
+	 * Manage stats displaying
+	 * @return void
+	 */
 	my.showStats = function()
 	{
 		$(".show-stats-button").css('display', "block");
