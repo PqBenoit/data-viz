@@ -21,25 +21,10 @@ var TweetGraph = (function(my, io, $)
 	 */
 	my.buildGraph = function (res)
 	{
-		var data = [];
-		for (var ii = 0, jj = res.lTweetGraph.length ; ii < jj ; ii++) {
-				var hour = new Date(res.lTweetGraph[ii].timestamp).getHours();
-				if (data[hour]) {
-					data[hour]++;
-					for (var i = 0, j = my.data.length ; i < j ; i++) {
-						if (my.data[i][0] == hour) {
-							my.data[i][1]++;
-						}
-					}
-				} else {
-					data[hour] = 1;
-					my.data.push([hour, data[hour]]);
-				}
+		for (nbtweet in res.nbtweet.length) {
+			my.data.push([nbtweet.hour, nbtweet.nb]);
 		}
-	};
 
-	my.getBuildGraph = function ()
-	{
 		my.options = {
 		    series: {
                 bars: {
@@ -88,42 +73,10 @@ var TweetGraph = (function(my, io, $)
 	 * @return void
 	 */
 	my.topHashtag = function(res){
-		var h1, h2, h3 = 0;
-
-		for (var i = 0, j = res.lTweetGraph.length ; i < j ; i++) {
-			var hashtags = res.lTweetGraph[i].hashtag;
-			var hashtagsLength = hashtags.length;
-
-			if (hashtagsLength > 1) {
-				for (var ii = 0, jj = hashtagsLength ; ii < jj ; ii++) {
-					my.buildHashtagsArray(hashtags[ii]);
-				}
-			} else if (hashtags.length == 1) {
-				my.buildHashtagsArray(hashtags[0]);
-			}
-		}
-	};
-
-	/**
-	 * Increment my.hashtagsArray entries
-	 * @param string hashtag
-	 * @return void
-	 */
-	my.buildHashtagsArray = function (hashtag)
-	{
-		if (my.hashtagsArray[hashtag]) {
-			my.hashtagsArray[hashtag]++;
-		} else {
-			my.hashtagsArray[hashtag] = 1;
-		}
-	};
-
-	my.getTopHashtag = function ()
-	{
 		var total = 0;
-		for (var hashtag in my.hashtagsArray) {
-		    my.hastagSort.push([hashtag, my.hashtagsArray[hashtag]])
-		    total += my.hashtagsArray[hashtag];
+		for (var hashtag in res.hashtags) {
+		    my.hastagSort.push([hashtag.name, hashtag.nb])
+		    total += hashtag.nb;
 		}
 
 		my.hastagSort.sort(function(a, b) {return b[1] - a[1]});
@@ -167,8 +120,6 @@ var TweetGraph = (function(my, io, $)
 
 		$('#load-stats').click(function(){
 			if ($('.container.stats').css('display') != 'block') {
-				my.getTopHashtag();
-				my.getBuildGraph();
 				$('.container.stats').css('display', 'block');
 			}
 			var offset = $(window).height();
