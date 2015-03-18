@@ -204,5 +204,12 @@ module.exports = function (server)
 		res.status('200').render('shootings/index');
 	});
 
+	/**
+	 * GET '/tree'
+	 */
+	router.get('/tree', function(req, res, next) {
+	  	res.status('200').render('tree/index');
+	});
+
 	return router;
 }

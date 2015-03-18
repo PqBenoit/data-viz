@@ -58,12 +58,6 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 			Sidebar.close();
 		});
 
-		$('svg').on('DOMNodeInserted', function(){
-			console.log('lol');
-			var circle = $('circle').last();
-			console.log(circle);
-			circle.width(20);
-		});
 	};
 
 
