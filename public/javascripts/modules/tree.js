@@ -72,7 +72,6 @@ var Tree = (function(my){
       var options = {
         segmentShowStroke : false,
         percentageInnerCutout : percentToShow[j],
-        animateScale : true,
       }
       var myDoughnutChart = new Chart(ctx).Doughnut(my.filteredTrees[j].trees, options);
     }
