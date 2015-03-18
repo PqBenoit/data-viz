@@ -1,0 +1,4 @@
+.tree canvas {
+	position: absolute;
+	z-index: 1;
+}

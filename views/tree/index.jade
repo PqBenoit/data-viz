@@ -1,10 +1,14 @@
 extends ../layout
 
 block content	
-  //- script(src='/javascripts/lib/p5.min.js')
-  //- script(src='/javascripts/processing.js')
-  canvas(id="tree" width="800", height="800") Your browser does not support the HTML5 canvas tag.
-  script(src='/javascripts/modules/tree.js')
+  div.tree
+    <canvas id="myChart5" width="865" height="865" data-index="5"></canvas>
+    <canvas id="myChart4" width="765" height="765" data-index="6"></canvas>
+    <canvas id="myChart3" width="640" height="640" data-index="7"></canvas>
+    <canvas id="myChart2" width="500" height="500" data-index="8"></canvas>
+    <canvas id="myChart1" width="340" height="340" data-index="9"></canvas>
   script(src='/javascripts/lib/random.js')
+  script(src='/javascripts/lib/chart.js')
+  script(src='/javascripts/modules/tree.js')
   script.
       Tree.init();
