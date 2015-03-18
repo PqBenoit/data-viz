@@ -60,8 +60,8 @@
     color: #ffffff;
 }
 .tweet-slide {
-    background: #000000;
-    color: #FFFFFF;
+    background: #FFFFFF;
+    color: #2c9fc4;
     width: 250px;
     height: 100%;
     position: absolute;
@@ -69,6 +69,7 @@
     right: 0;
     overflow: hidden;
     font-size: 1.1em;
+    border-left: 1px solid #2c9fc4;
 }  
     .tweet-slide h1 {
         padding: 26px 10px 0 0;
@@ -114,7 +115,7 @@
             }
 
         .tweet-slide .tweet-content p {
-            background: #222222;
+            background: #2c9fc4;
             color: #FFFFFF;
             text-align: justify;
             padding: 20px 10px 20px 10px;
