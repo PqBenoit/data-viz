@@ -147,7 +147,7 @@ module.exports = function (server)
 			lTweet.hashtag = [];
 
 			var m = new time.Date();
-			m.setTimezone("France/Paris");
+			m.setTimezone("Europe/Paris");
 			m.setTime(tweet.timestamp_ms);
 			var tHour = new Date(m).getHours();
 
