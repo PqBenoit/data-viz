@@ -58,7 +58,6 @@ module.exports = function (server)
 		 * Get hashtag data for tweets graph viz
 		 * Send data via socket.io
 		 */
-		socket.removeAllListeners('require_tweets_graph_hashtags');
 		socket.on("require_tweets_graph_hashtags", function () {
 			Hashtag.find({}, function(err, res){
 				var counts = {};
@@ -74,7 +73,6 @@ module.exports = function (server)
 		 * Get timestamp data for tweets graph viz
 		 * Send data via socket.io
 		 */
-		socket.removeAllListeners("require_tweets_graph_nb");
 		socket.on("require_tweets_graph_nb", function () {
 			Nbtweet.find({}, function(err, res){
 				var counts = {};
