@@ -79,7 +79,6 @@ var Shooting = (function(my, Map, io, $)
 		setTimeout(function(){
 			my.queryShootingListElement();
 		}, 5000);
-		my.resetList();
 	};
 
 
