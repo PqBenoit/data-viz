@@ -17,8 +17,9 @@ var Shooting = (function(my, Map, io, $)
 	 */
 	my.setupShootingPlaces = function ()
 	{	
-		$('#map').css({
-			marginLeft: '150px'
+		$('.hello').css({
+			paddingLeft: '150px',
+			paddingTop: '50px'
 		});
 
 		$('path').css({
