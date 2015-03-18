@@ -154,7 +154,7 @@ var Shooting = (function(my, Map, io, $)
 		$(form).append(input).appendTo(header);
 
 		$(input).change( function () {
-			var filter = $(this).val();
+			var filter = $(this).val().toUpperCase();
 			if (filter) {
 				$(list).find("li:not(:contains(" + filter + "))").hide();
 				$(list).find("li:contains(" + filter + ")").show();
