@@ -2,3 +2,29 @@
 	position: absolute;
 	z-index: 1;
 }
+.tree canvas.show {
+  z-index: 20;
+}
+.tree #message {
+  line-height: 20px;
+  min-height: 20px;
+  position: relative;
+  z-index: 25;
+}
+.tree input {
+  position: relative;
+  z-index: 25;
+}
+.tree .screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+  opacity: 0.6;
+  z-index: 2;
+}
+.tree .screen.showAll {
+  opacity: 0 !important;
+}

@@ -28,6 +28,34 @@ var Tree = (function(my){
       }
       my.draw();
     });
+    my.initRangeInput();
+  };
+
+  my.initRangeInput = function(){
+    $('#rangeSelector').on('change mousemove', function(event) {
+      var value = $(this).val();
+      $('canvas').removeClass('show');
+
+      if(value==0){
+        $('.screen').addClass('showAll');
+        $('#message').text('Toute la forêt parisienne');
+      } else {
+        $('.screen').removeClass('showAll');
+        $('#myChart'+value).addClass('show');
+      }
+
+      if(value == 1){
+        $('#message').text('Moins de 10 représentants');
+      } else if(value==2){
+        $('#message').text('Moins de 100 représentants');
+      } else if(value==3){
+        $('#message').text('Moins de 1000 représentants');
+      } else if(value==4){
+        $('#message').text('Moins de 5000 représentants');
+      } else if(value==5){
+        $('#message').text('Plus de 5000 représentants');
+      }
+    });
   };
 
   my.draw = function(){
