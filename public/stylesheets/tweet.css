@@ -42,7 +42,7 @@
     position: absolute;
     left: 50%;
     background: #ffffff;
-    border: 1px solid #2c9fc4;
+    border: 1px solid #27C399;
     padding: 5px 8px 5px 8px;
     font-size: 1.4em;
     font-family: 'Source Sans Pro', arial, sans-serif;
@@ -50,13 +50,13 @@
     text-align: center;
     cursor: pointer;
     margin: 40px auto 0 -55px;
-    color: #2c9fc4;
+    color: #27C399;
     -webkit-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 .show-stats-button:hover {
-    background: #2c9fc4;
+    background: #27C399;
     color: #ffffff;
 }
 .tweet-slide {
