@@ -105,6 +105,7 @@ var TweetGraph = (function(my, io, helpers, $)
 	 */
 	my.showStats = function()
 	{
+		var offset = $(window).height();
 		$(".show-stats-button").css('display', "block");
 		$('#load-stats').click(function(){
 			if ($('.container.stats').css('display') != 'block') {
@@ -114,22 +115,23 @@ var TweetGraph = (function(my, io, helpers, $)
 				my.socket.emit('require_tweets_graph_hashtags');
 				my.socket.emit('require_tweets_graph_nb');
 
-				my.socket.removeAllListeners("response_tweets_graph_h");
-				my.socket.on('response_tweets_graph_h', function(res){
-					my.topHashtag(res);
-				});
-
 				my.socket.removeAllListeners("response_tweets_graph_nb");
 				my.socket.on('response_tweets_graph_nb', function(res){
 					my.buildGraph(res);
-					$("#button-stats-loader").css('display', "none");
-					$(".show-stats-button").css('display', "block");
-					$('.container.stats').css('display', 'block');
+					my.socket.removeAllListeners("response_tweets_graph_h");
+					my.socket.on('response_tweets_graph_h', function(res){
+						my.topHashtag(res);
+						$("#button-stats-loader").css('display', "none");
+						$(".show-stats-button").css('display', "block");
+						$('.container.stats').css('display', 'block');
+					});
+					options = { scrollTop: offset };
+					$('html').animate(options, 2000);
 				});
+			} else {
+				options = { scrollTop: offset };
+				$('html').animate(options, 2000);
 			}
-			var offset = $(window).height();
-			options = { scrollTop: offset };
-			$('html').animate(options, 1000);
 		});
 	}
 

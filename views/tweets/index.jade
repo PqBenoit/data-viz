@@ -1,13 +1,20 @@
 extends ../layout
 
-block content	
+block content
+	section.about.home
+		p 
+			<i class="fa fa-map-marker"></i>
+			p Une carte de Paris. Les tweets en direct, placés sur la carte.
+		p 
+			<i class="fa fa-bar-chart"></i> 
+			p Des statistiques de tous les tweets sauvegardés.
 	section.tweets-page
 		include ../nav
 
 		script(src='/javascripts/raphael.js')
 		script(src='https://cdn.socket.io/socket.io-1.3.3.js')
 		script.
-			var io = io('http://0.0.0.0:3000');
+			var io = io('http://kikeriki.herokuapp.com');
 
 		section(class="container tweets")
 			div(id="map")
@@ -40,6 +47,13 @@ block content
 		script(src='/javascripts/tweetGraph.js')
 		script(src='/javascripts/tweet.js')
 		script(type='text/javascript').
+			$('.tweets-page').css('display', 'none');
+			$('.about').animate({
+				opacity: 0
+			}, 5000, function(){
+				$('.about').css('display', 'none');
+				$('.tweets-page').fadeIn(500);
+			});
 			$(document).ready(function() {
 				Sidebar.init();
 				Map.init();

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	main.home
+		section.center-block
+			h1 Tout savoir sur Paris ?
+			hr.divider
+			div.button
+				a(href="/tweets") Twitter à Paris
+			div.button
+				a(href="/shootings") Films tournés à Paris
+			div.button
+				a(href="/tree") Les arbres de la ville
+
+	script.
+		$('.center-block').hide().fadeIn(1500);
