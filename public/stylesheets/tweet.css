@@ -3,6 +3,7 @@
  */
 .tweets-page {
     height: 100%;
+    position: relative;
 }
 .container.tweets {
     min-height: calc(100% - 5em);
@@ -20,7 +21,7 @@
     padding: 0 0 50px 0;
 }
 #map {
-    padding-top: 20px;
+    padding-top: 20px;    
 }
 #map circle {
     cursor: pointer;
