@@ -84,3 +84,31 @@
 	color: #2c9fc4;
 	cursor: pointer;
 }
+
+.down-bar {
+	background: #2c9fc4; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #2c9fc4 0%, #00b9a2 45%, #fbe380 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#2c9fc4), color-stop(45%,#00b9a2), color-stop(100%,#fbe380)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* IE10+ */
+  background: linear-gradient(135deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c9fc4', endColorstr='#fbe380',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  position: absolute;
+  bottom: 0;
+  width: 100%; 
+}
+
+.li-click {
+	width: 100%;
+	text-align: center;
+	font-size: 24px;
+	color: #fff;
+}
+
+.li-click p {
+	font-size: 16px;
+	font-weight: 100;
+	margin-top: 5px; 
+}
