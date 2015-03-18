@@ -112,6 +112,8 @@ var TweetGraph = (function(my, io, helpers, $)
 				$(".show-stats-button").css('display', "none");
 				$("#button-stats-loader").css('display', "block");
 
+				console.log('stats requires');
+
 				my.socket.emit('require_tweets_graph_hashtags');
 				my.socket.emit('require_tweets_graph_nb');
 
