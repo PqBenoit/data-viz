@@ -43,8 +43,11 @@ var Shooting = (function(my, Map, io, $)
 
 			var pos = Map.getPixelPosition(Map.rsr, data.data.fields.geo_coordinates.lng, data.data.fields.geo_coordinates.lat);
 
+			color = ['#5EC996', '#2C9FC4', '#F7E381'];
+			randColor = Math.floor((Math.random() * 3));
+
 			circle = Map.rsr.circle(pos.x, pos.y, 10);
-			circle.attr('fill', '#2c9fc4');
+			circle.attr('fill', color[randColor]);
 			circle.attr('stroke', 'none');
 
 			console.log('shootings placed');
