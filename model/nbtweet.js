@@ -4,9 +4,6 @@ var Schema = mongoose.Schema;
 var NbtweetSchema = new Schema({
 	hour: {
 		type: Number
-	},
-	nb: {
-		type: Number
 	}
 });
 

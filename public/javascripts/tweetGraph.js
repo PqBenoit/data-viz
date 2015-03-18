@@ -1,18 +1,19 @@
 /**
  * @param TweetGraph my
  * @param socket.io io
+ * @param Helpers helpers
  * @param jQuery $
  * @return TweetGraph
  * @use jQuery flot plugin
  */
-var TweetGraph = (function(my, io, $)
+var TweetGraph = (function(my, io, helpers, $)
 {
 	my.socket = io;
 	my.data = [];
 	my.dataset =  [];
 	my.options = {};
 	my.hashtagsArray = {init: 0};
-	my.hastagSort = [];
+	my.hashtagSort = [];
 
 	/**
 	 * Init graph options, construct data array, then build graph
@@ -21,8 +22,8 @@ var TweetGraph = (function(my, io, $)
 	 */
 	my.buildGraph = function (res)
 	{
-		for (nbtweet in res.nbtweet.length) {
-			my.data.push([nbtweet.hour, nbtweet.nb]);
+		for (nbtweet in res.nbtweet) {
+			my.data.push([nbtweet, res.nbtweet[nbtweet]]);
 		}
 
 		my.options = {
@@ -40,6 +41,9 @@ var TweetGraph = (function(my, io, $)
 		    	color: "black",
 			    tickSize: 1,
 			    tickDecimals: 0,
+			    tickFormatter: function(val) {
+			    	return val+"h";
+			    },
 			    min: 0,
 			    max: 23
 		    },
@@ -74,25 +78,55 @@ var TweetGraph = (function(my, io, $)
 	 */
 	my.topHashtag = function(res){
 		var total = 0;
-		for (var hashtag in res.hashtags) {
-		    my.hastagSort.push([hashtag.name, hashtag.nb])
-		    total += hashtag.nb;
+		for (hashtag in res.hashtags) {
+		    total += res.hashtags[hashtag];
 		}
+		my.hashtagSort = helpers.sortObject(res.hashtags);
 
-		my.hastagSort.sort(function(a, b) {return b[1] - a[1]});
+		console.log(my.hashtagSort);
 
-		var top1 = Math.round((my.hastagSort[0][1]/total)*10000);
-		$('#top1-graph').css('height', top1+'px');
-		$('#top1-name').text('#'+my.hastagSort[0][0]+' - '+top1);
+		var top1 = my.hashtagSort[0].value;
+		$('#top1-graph').css('height', (Math.round((top1/total)*1000))+'px');
+		$('#top1-name').text('#'+my.hashtagSort[0].key+' - '+top1);
 
-		var top2 = Math.round((my.hastagSort[1][1]/total)*10000);
-		$('#top2-graph').css('height', top2+'px');
-		$('#top2-name').text('#'+my.hastagSort[1][0]+' - '+top2);
+		var top2 = my.hashtagSort[1].value;
+		$('#top2-graph').css('height', (Math.round((top2/total)*1000))+'px');
+		$('#top2-name').text('#'+my.hashtagSort[1].key+' - '+top2);
 
-		var top3 = Math.round((my.hastagSort[2][1]/total)*10000);
-		$('#top3-graph').css('height', top3+'px');
-		$('#top3-name').text('#'+my.hastagSort[2][0]+' - '+top3);
+		var top3 = my.hashtagSort[2].value;
+		$('#top3-graph').css('height', (Math.round((top3/total)*1000))+'px');
+		$('#top3-name').text('#'+my.hashtagSort[2].key+' - '+top3);
 	};
+
+	my.showStats = function()
+	{
+		$(".show-stats-button").css('display', "block");
+		$('#load-stats').click(function(){
+			if ($('.container.stats').css('display') != 'block') {
+				$(".show-stats-button").css('display', "none");
+				$("#button-stats-loader").css('display', "block");
+
+				my.socket.emit('require_tweets_graph_hashtags');
+				my.socket.emit('require_tweets_graph_nb');
+
+				my.socket.removeAllListeners("response_tweets_graph_h");
+				my.socket.on('response_tweets_graph_h', function(res){
+					my.topHashtag(res);
+				});
+
+				my.socket.removeAllListeners("response_tweets_graph_nb");
+				my.socket.on('response_tweets_graph_nb', function(res){
+					my.buildGraph(res);
+					$("#button-stats-loader").css('display', "none");
+					$(".show-stats-button").css('display', "block");
+					$('.container.stats').css('display', 'block');
+				});
+			}
+			var offset = $(window).height();
+			options = { scrollTop: offset };
+			$('html').animate(options, 1000);
+		});
+	}
 
 	/**
 	 * Init TweetGraph Module
@@ -100,34 +134,10 @@ var TweetGraph = (function(my, io, $)
 	 */
 	my.init = function ()
 	{
-		$("#button-stats-loader").css('display', "block");
 		console.log('init TweetGraph Module');
-
-		my.socket.emit('require_tweets_graph_hashtags');
-		my.socket.emit('require_tweets_graph_nb');
-
-		my.socket.removeAllListeners("response_tweets_graph_h");
-		my.socket.on('response_tweets_graph_h', function(res){
-			my.topHashtag(res);
-		});
-
-		my.socket.removeAllListeners("response_tweets_graph_nb");
-		my.socket.on('response_tweets_graph_nb', function(res){
-			my.buildGraph(res);
-			$("#button-stats-loader").css('display', "none");
-			$(".show-stats-button").css('display', "block");
-		});
-
-		$('#load-stats').click(function(){
-			if ($('.container.stats').css('display') != 'block') {
-				$('.container.stats').css('display', 'block');
-			}
-			var offset = $(window).height();
-			options = { scrollTop: offset };
-			$('html').animate(options, 1000);
-		});
+		my.showStats();
 	};
 
 	return my;
 
-}(TweetGraph || {}, io || {}, jQuery));
+}(TweetGraph || {}, io || {}, Helpers || {}, jQuery));

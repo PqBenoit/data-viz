@@ -57,6 +57,10 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 		$('.fa-close').click(function(){
 			Sidebar.close();
 		});
+
+		$('svg').on('DOMNodeInserted', function(){
+
+		});
 	};
 
 

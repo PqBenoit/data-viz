@@ -18,6 +18,7 @@
 }
 .flot-x-axis {
 	top: 10px !important;
+	left: -5px !important;
 }
 .flot-y-axis {
 	left: -40px !important;
@@ -25,7 +26,7 @@
 #nb-tweets {
 	width: 560px;
 	height: 300px;
-	margin: 30px auto 60px auto;
+	margin: 30px auto 90px auto;
 }
 #top-hashtags {
 	width: 600px;
