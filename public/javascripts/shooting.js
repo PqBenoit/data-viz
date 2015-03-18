@@ -17,8 +17,13 @@ var Shooting = (function(my, Map, io, $)
 	 */
 	my.setupShootingPlaces = function ()
 	{	
-		$('#map').css({
-			marginLeft: '150px'
+		$('.hello').css({
+			paddingLeft: '150px',
+		});
+
+		downbarHeight = $(window).height() - 65 - $('#movies-container').height();
+		$('.down-bar').css({
+			height: downbarHeight - 10 + 'px'
 		});
 
 		$('path').css({
@@ -39,12 +44,16 @@ var Shooting = (function(my, Map, io, $)
 			var pos = Map.getPixelPosition(Map.rsr, data.data.fields.geo_coordinates.lng, data.data.fields.geo_coordinates.lat);
 
 			circle = Map.rsr.circle(pos.x, pos.y, 10);
-			circle.attr('fill', '#4099FF');
+			circle.attr('fill', '#2c9fc4');
 			circle.attr('stroke', 'none');
 
-			console.log('shootings placed');			
+			console.log('shootings placed');
 
 			$list.append('<li class="list-item">' + data.data.fields.titre + '</li>');
+
+			$(circle.node).click(function(){
+				my.openLi(data.data.fields.titre);
+			});
 
 			if(counter == 650){
 				$('path').animate({
@@ -65,12 +74,49 @@ var Shooting = (function(my, Map, io, $)
 			for (var i = 0, j = data.length ; i < j ; i++) {
 				var pos = Map.getPixelPosition(Map.rsr, data[i].fields.geo_coordinates.lng, data[i].fields.geo_coordinates.lat);
 				circle = Map.rsr.circle(pos.x, pos.y, 10);
-				circle.attr('fill', '#000000');
+				circle.attr('fill', '#2c9fc4');
 				circle.attr('stroke', 'none');
+				circle.attr('index', i);
 			}
+
+			$('circle').click(function(){
+				console.log($(this));
+			});
 			console.log('new shootings placed');
+
+
 		});
 	};
+
+	/**
+	*  
+	* 
+	* 
+	*/
+	my.openLi = function(title, count)
+	{	
+		if(count){
+			$('.down-bar').empty();
+			var div = '<div class=\'li-click\'><h2>' + title + '</h2><p>' + count + ' lieux de tournage</p></div>'
+			$('.down-bar').append(div);
+			var marginTop = ($('.down-bar').height() / 2) - ($('.li-click').height()/2);
+			console.log(marginTop);
+			$('.li-click').css({
+				marginTop: marginTop
+			});
+		}
+		else {
+			$('.down-bar').empty();
+			var div = '<div class=\'li-click\'><h2>' + title + '</h2></div>'
+			$('.down-bar').append(div);
+			var marginTop = ($('.down-bar').height() / 2) - ($('.li-click').height()/2);
+			console.log(marginTop);
+			$('.li-click').css({
+				marginTop: marginTop
+			});	
+		}
+
+	}
 
 	/**
 	*  
@@ -87,6 +133,9 @@ var Shooting = (function(my, Map, io, $)
 			var title = $(this).html();
 			console.log(title);
 			my.socket.emit('titleClicked', {title: title});
+			setTimeout(function(){
+				my.openLi(title, $('circle').length);
+			}, 500);
 		});
 
 	}
