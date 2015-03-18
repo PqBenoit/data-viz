@@ -1,15 +1,18 @@
 extends ../layout
 
 block content
-  div.tree
-    p(id="message") Toute la forêt parisienne
-    input(id="rangeSelector" type="range" value="0" max="5" min="0" step="1")
-    div.screen.showAll
-    <canvas id="myChart5" width="865" height="865" data-index="5"></canvas>
-    <canvas id="myChart4" width="765" height="765" data-index="4"></canvas>
-    <canvas id="myChart3" width="640" height="640" data-index="3"></canvas>
-    <canvas id="myChart2" width="500" height="500" data-index="2"></canvas>
-    <canvas id="myChart1" width="340" height="340" data-index="1"></canvas>
+  <link href='http://fonts.googleapis.com/css?family=Nova+Mono' rel='stylesheet' type='text/css'>
+  div.tree-container
+    div.blurred
+    div.tree
+      p(id="message") Toute la forêt parisienne
+      input(id="rangeSelector" type="range" value="0" max="5" min="0" step="1")
+      div.screen.showAll
+      <canvas id="myChart5" width="865" height="865" data-index="5"></canvas>
+      <canvas id="myChart4" width="765" height="765" data-index="4"></canvas>
+      <canvas id="myChart3" width="640" height="640" data-index="3"></canvas>
+      <canvas id="myChart2" width="500" height="500" data-index="2"></canvas>
+      <canvas id="myChart1" width="340" height="340" data-index="1"></canvas>
   script(src='/javascripts/lib/random.js')
   script(src='/javascripts/lib/chart.js')
   script(src='/javascripts/modules/tree.js')
