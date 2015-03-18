@@ -115,12 +115,11 @@ var TweetGraph = (function(my, io, helpers, $)
 				my.socket.emit('require_tweets_graph_hashtags');
 				my.socket.emit('require_tweets_graph_nb');
 
-				my.socket.removeAllListeners("response_tweets_graph_nb");
 				my.socket.on('response_tweets_graph_nb', function(res){
-					console.log('stats response');
+					console.log('stats response 1');
 					my.buildGraph(res);
-					my.socket.removeAllListeners("response_tweets_graph_h");
 					my.socket.on('response_tweets_graph_h', function(res){
+						console.log('stats response 2');
 						my.topHashtag(res);
 						$("#button-stats-loader").css('display', "none");
 						$(".show-stats-button").css('display', "block");
