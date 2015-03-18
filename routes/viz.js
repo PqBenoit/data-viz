@@ -149,7 +149,7 @@ module.exports = function (server)
 			m.setTimezone("France/Paris");
 			m.setMilliseconds(tweet.timestamp_ms);
 			tHour = new Date(m).getHours();
-			console.log(tHour);
+
 			Nbtweet.findOne({hour: tHour}, function(err, res){
 				if (res) {
 					res.nb++;

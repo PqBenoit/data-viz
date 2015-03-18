@@ -36,7 +36,7 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 			var pos = Map.getPixelPosition(Map.rsr, data.tweet.coordinates.coordinates[0], data.tweet.coordinates.coordinates[1]);
 
 			circle = Map.rsr.circle(pos.x, pos.y, 10);
-			circle.attr('fill', '#4099FF');
+			circle.attr('fill', '#18BD9E');
 			circle.attr('stroke', 'none');
 			
 			$(circle.node).click(function(){
@@ -59,7 +59,10 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 		});
 
 		$('svg').on('DOMNodeInserted', function(){
-
+			console.log('lol');
+			var circle = $('circle').last();
+			console.log(circle);
+			circle.width(20);
 		});
 	};
 
