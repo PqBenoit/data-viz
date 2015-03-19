@@ -39,6 +39,21 @@
   font-size: 20px;
   top: 10px;
   left: 10px;
+  color: white;
+}
+.tree #message.black {
+	color: black;
+}
+.tree .loader {
+	position: relative;
+	font-size: 16px;
+	line-height: 24px;
+	width: 50%;
+	min-width: 300px;
+	margin: 20% auto;
+	background: rgba(255,255,255,0.2);
+	padding: 20px;
+	border-radius: 5px;
 }
 .tree input {
   position: relative;

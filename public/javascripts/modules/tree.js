@@ -26,7 +26,10 @@ var Tree = (function(my){
         var maxRange = my.maxRanges[i];
         my.filteredTrees[i] = filterByRange(trees, minRange, maxRange);
       }
-      my.draw();
+      $('.loader').addClass('fadeOutUp');
+      setTimeout(function(){
+        my.draw();
+      }, 300);
     });
     my.initRangeInput();
   };
@@ -38,8 +41,10 @@ var Tree = (function(my){
 
       if(value==0){
         $('.screen').addClass('showAll');
+        $('#message').removeClass('black');
         $('#message').text('Toute la forêt parisienne');
       } else {
+        $('#message').addClass('black');
         $('.screen').removeClass('showAll');
         $('#myChart'+value).addClass('show');
       }
