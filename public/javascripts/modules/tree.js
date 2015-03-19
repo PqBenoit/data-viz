@@ -9,7 +9,7 @@ var Tree = (function(my){
     console.log('Init Tree module');
 
     $('canvas').each(function(index, el) {
-      var maxHeightCanvas = (($(window).height()-180)*0.85 < $(window).width()*0.85) ? ($(window).height()-180)*0.85 : ($(window).height()-180)*0.85;
+      var maxHeightCanvas = ($('.tree').height()*0.85 < $('.tree').width()*0.85) ? $('.tree').height()*0.85 : $('.tree').width()*0.85;
       var index = $(el).data('index');
       var newSize = (my.canvasRatio[index-1] * maxHeightCanvas) / my.canvasRatio[4];
       $(el).attr('height', newSize);
@@ -18,8 +18,8 @@ var Tree = (function(my){
 
     $('canvas').each(function(index, el) {
       var margin = {
-        top: ($(window).height() - $(el).height())/2,
-        left: ($(window).width() - $(el).width())/2,
+        top: ($('.tree').height() - $(el).height())/2,
+        left: ($('.tree').width() - $(el).width())/2,
       };
       $(el).css({
         top: margin.top+'px',
@@ -34,15 +34,10 @@ var Tree = (function(my){
         var maxRange = my.maxRanges[i];
         my.filteredTrees[i] = filterByRange(trees, minRange, maxRange);
       }
+      my.draw();
       setTimeout(function(){
-        my.draw();
-        $('.loader').fadeOut(3000);
-        $('.down-bar-tree').animate({
-          height: '120px'
-        }, 3000, function(){
-            $('.infos').fadeIn(2000);
-        });
-      }, 300);
+        $('.down-bar-tree').addClass('fadeOutDown');
+      }, 1000);
     });
     my.initRangeInput();
   };
