@@ -6,7 +6,7 @@
     position: relative;
 }
 .container.tweets {
-    min-height: calc(100% - 5em);
+    height: calc(100% - 5em);
     max-height: calc(100% - 5em);
     position: relative;
 }
@@ -23,11 +23,24 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c9fc4', endColorstr='#fbe380',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     padding: 1px 0 0 0;
 }
+#about-map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    border-right: 1px solid #2c9fc4;
+    height: 100%;
+    background: #ffffff;
+}
 #map {
-    padding-top: 20px;    
+    padding-top: 20px;
 }
 #map circle {
     cursor: pointer;
+}
+.container.tweets #map {
+    width: 70%;
+    float:right;
 }
 #button-stats-loader {
     display: none;
