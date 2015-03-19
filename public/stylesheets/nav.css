@@ -5,6 +5,8 @@ nav {
   line-height: 5em;
   text-align: right;
   padding: 0 5%;
+  z-index: 100;
+  position: relative;
 }
 
 nav .logo {
