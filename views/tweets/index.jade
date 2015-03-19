@@ -14,10 +14,14 @@ block content
 		script(src='/javascripts/raphael.js')
 		script(src='https://cdn.socket.io/socket.io-1.3.3.js')
 		script.
-			var io = io('http://kikeriki.herokuapp.com');
+			var io = io('http://localhost:3000');
 
 		section(class="container tweets")
+			aside(id="about-map")
+				h1 
+					i(class="fa fa-info")
 			div(id="map")
+			div(class="clear")
 			aside(class="tweet-slide")
 				i(class="fa fa-close")
 				div(class="tweet-content")
