@@ -9,7 +9,7 @@ var Tree = (function(my){
     console.log('Init Tree module');
 
     $('canvas').each(function(index, el) {
-      var maxHeightCanvas = (($(window).height()-180)*0.85 < $(window).width()*0.85) ? ($(window).height()-180)*0.85 : ($(window).height()-180)*0.85;
+      var maxHeightCanvas = (($(window).height())*0.85 < $(window).width()*0.85) ? ($(window).height())*0.85 : ($(window).height())*0.85;
       var index = $(el).data('index');
       var newSize = (my.canvasRatio[index-1] * maxHeightCanvas) / my.canvasRatio[4];
       $(el).attr('height', newSize);
@@ -38,10 +38,8 @@ var Tree = (function(my){
         my.draw();
         $('.loader').fadeOut(3000);
         $('.down-bar-tree').animate({
-          height: '120px'
-        }, 3000, function(){
-            $('.infos').fadeIn(2000);
-        });
+          height: 'toggle'
+        }, 3000);
       }, 300);
     });
     my.initRangeInput();

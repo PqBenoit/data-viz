@@ -30,7 +30,6 @@
 .tree canvas {
 	position: absolute;
 	z-index: 1;
-  margin: -10px 0 0 0;
 }
 .tree canvas.show {
   z-index: 20;
@@ -128,15 +127,13 @@ input[type="range"]::slider-thumb:active {
     font-weight: 200;
     text-align: center;
 }
-.down-bar-tree p.infos {
+.down-bar-tree .loader p.infos {
   font-size: 1.2em;
-  display: none;
   margin:0 auto 15px auto;
   width: 50%;
   min-width: 500px;
 }
 .down-bar-tree .loader p{
-    display: block;
     color: #ffffff;
     font-size: 2em;
     font-weight: 200;
