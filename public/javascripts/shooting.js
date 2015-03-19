@@ -83,8 +83,6 @@ var Shooting = (function(my, Map, io, $)
 				console.log($(this));
 			});
 			console.log('new shootings placed');
-
-
 		});
 	};
 
