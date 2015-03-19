@@ -35,8 +35,13 @@ var Tree = (function(my){
         my.filteredTrees[i] = filterByRange(trees, minRange, maxRange);
       }
       my.draw();
-      setTimeout(function(){
+      $('.sk-spinner').addClass('fadeOut');
+      $('.close').click(function(event) {
+        /* Act on the event */
         $('.down-bar-tree').addClass('fadeOutDown');
+      });
+      setTimeout(function(){
+        $('.close').removeClass('fadeOut').removeClass('hide').addClass('fadeIn');
       }, 1000);
     });
     my.initRangeInput();
