@@ -35,8 +35,11 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 		if (null != data.tweet.coordinates) {
 			var pos = Map.getPixelPosition(Map.rsr, data.tweet.coordinates.coordinates[0], data.tweet.coordinates.coordinates[1]);
 
+			color = ['#5EC996', '#2C9FC4', '#F7E381'];
+			randColor = Math.floor((Math.random() * 3))
+
 			circle = Map.rsr.circle(pos.x, pos.y, 10);
-			circle.attr('fill', '#2c9fc4');
+			circle.attr('fill', color[randColor]);
 			circle.attr('stroke', 'none');
 			
 			$(circle.node).click(function(){
@@ -58,9 +61,6 @@ var Tweet = (function(my, Map, io, Sidebar, TweetGraph, $)
 			Sidebar.close();
 		});
 
-		$('svg').on('DOMNodeInserted', function(){
-
-		});
 	};
 
 

@@ -11,8 +11,7 @@ var Shooting = (function(my, Map, io, $)
 	var counter = 0;
 
 	/**
-	 * Websocket connection, with socket.io
-	 * Listen 'tweet' socket.io event
+	 * Init map with all shootings places
 	 * @return void
 	 */
 	my.setupShootingPlaces = function ()
@@ -87,28 +86,31 @@ var Shooting = (function(my, Map, io, $)
 	};
 
 	/**
-	*  
-	* 
-	* 
-	*/
+	 * Append infos about the selected film in aside on page bottom
+	 * @param title
+	 * @param count
+	 * @return void
+	 */
 	my.openLi = function(title, count)
 	{	
 		if(count){
 			$('.down-bar').empty();
+			
 			var div = '<div class=\'li-click\'><h2>' + title + '</h2><p>' + count + ' lieux de tournage</p></div>'
 			$('.down-bar').append(div);
+			
 			var marginTop = ($('.down-bar').height() / 2) - ($('.li-click').height()/2);
-			console.log(marginTop);
 			$('.li-click').css({
 				marginTop: marginTop
 			});
 		}
 		else {
 			$('.down-bar').empty();
+			
 			var div = '<div class=\'li-click\'><h2>' + title + '</h2></div>'
 			$('.down-bar').append(div);
+			
 			var marginTop = ($('.down-bar').height() / 2) - ($('.li-click').height()/2);
-			console.log(marginTop);
 			$('.li-click').css({
 				marginTop: marginTop
 			});	
@@ -117,20 +119,19 @@ var Shooting = (function(my, Map, io, $)
 	}
 
 	/**
-	*  
-	* 
-	* 
-	*/
+	 * Append all shootings places for selected (clicked) film on list
+	 * @return void
+	 */
 	my.queryShootingListElement = function()
 	{
 		console.log('list ready');
 
-
 		$('.list-item').click(function(){
 			$('#map').removeClass('rotated');
+			
 			var title = $(this).html();
-			console.log(title);
 			my.socket.emit('titleClicked', {title: title});
+			
 			setTimeout(function(){
 				my.openLi(title, $('circle').length);
 			}, 500);
@@ -138,6 +139,11 @@ var Shooting = (function(my, Map, io, $)
 
 	}
 
+	/**
+	 * Filter for search
+	 * @param header
+	 * @param list
+	 */
 	my.listFilter = function(header, list) {
 		var form = $("<form>").attr({"class":"filterform","action":"#"}),
 		input = $("<input>").attr({"class":"filterinput","type":"text", "placeholder":"Titre..."});
@@ -157,18 +163,19 @@ var Shooting = (function(my, Map, io, $)
 		});
 	}
 
-
-
 	/**
-	 * Init Tweet Module
-	 * return void
+	 * Init Shooting Module
+	 * @return void
 	 */
 	my.init = function ()
 	{
 		my.listFilter($('.list-search'), $('#movies-list').find('ul'));
+		
 		console.log('init Shooting Module');
+		
 		my.socket.emit('require_shootings');
 		my.setupShootingPlaces();
+		
 		setTimeout(function(){
 			my.queryShootingListElement();
 		}, 5000);

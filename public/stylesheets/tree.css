@@ -1,0 +1,108 @@
+.tree-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.tree {
+  font-family: 'Nova Mono';
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.blurred {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  background-image: url('/img/tree_bg.jpg');
+  background-position: center center;
+  background-size: cover;
+  height: 110%;
+  width: 110%;
+  position: absolute;
+  top: -5%;
+  left: -5%;
+}
+.tree canvas {
+	position: absolute;
+	z-index: 1;
+}
+.tree canvas.show {
+  z-index: 20;
+}
+.tree #message {
+  line-height: 20px;
+  min-height: 20px;
+  position: relative;
+  z-index: 25;
+  font-size: 20px;
+  top: 10px;
+  left: 10px;
+  color: white;
+}
+.tree #message.black {
+	color: black;
+}
+.tree .loader {
+	position: relative;
+	font-size: 16px;
+	line-height: 24px;
+	width: 50%;
+	min-width: 300px;
+	margin: 20% auto;
+	background: rgba(255,255,255,0.2);
+	padding: 20px;
+	border-radius: 5px;
+}
+.tree input {
+  position: relative;
+  z-index: 25;
+  top: 40px;
+  left: 10px;
+}
+.tree .screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+  opacity: 0.6;
+  z-index: 2;
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+}
+.tree .screen.showAll {
+  opacity: 0 !important;
+}
+
+input[type="range"] {
+  display: block;
+  -webkit-appearance: none;
+  background-color: #bdc3c7;
+  width: 300px;
+  height: 5px;
+  border-radius: 5px;
+  margin: 0;
+  outline: 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #e74c3c;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}​
+  input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: white;
+    border: 2px solid #e74c3c;
+  }
+  input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.6);
+  }

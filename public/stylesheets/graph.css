@@ -8,10 +8,19 @@
 	color: #ffffff;
 	text-align: center;
 	font-size: 1.2em;
-	margin: 20px auto 20px auto;
+	margin: 50px auto 0 auto;
 	width: 600px;
 	padding-bottom: 5px;
 	border-bottom: 1px solid #ffffff;
+}
+#nb-tweets {
+	width: 600px;
+	height: 300px;
+	margin: 20px auto 70px auto;
+}
+#top-hashtags {
+	width: 600px;
+	margin: 20px auto 0 auto;
 }
 .flot-text {
 	color: #ffffff !important;
@@ -22,15 +31,6 @@
 }
 .flot-y-axis {
 	left: -40px !important;
-}
-#nb-tweets {
-	width: 560px;
-	height: 300px;
-	margin: 30px auto 90px auto;
-}
-#top-hashtags {
-	width: 600px;
-	margin: 50px auto 0 auto;
 }
 #top1-graph, #top1-name, #top2-graph, #top2-name,  #top3-graph, #top3-name  {
 	display: inline-block;
@@ -43,11 +43,11 @@
 	margin-bottom: 20px;
 }
 #top1-graph {
-	background: #fff;
+	background: rgba(255,255,255,0.9);
 }
 #top2-graph {
-	background: #666;
+	background: rgba(255,255,255,0.6);
 }
 #top3-graph {
-	background: #333;
+	background: rgba(255,255,255,0.3);
 }

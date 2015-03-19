@@ -6,25 +6,54 @@
     position: relative;
 }
 .container.tweets {
-    min-height: calc(100% - 5em);
+    height: calc(100% - 5em);
     max-height: calc(100% - 5em);
     position: relative;
 }
 .container.stats {
     min-height: 100%;
-    max-height: 100%;
-    overflow: hidden;
-}
-.container.stats {
     display: none;
-    background: #000000;
-    padding: 0 0 50px 0;
+    background: #2c9fc4; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  #2c9fc4 0%, #00b9a2 45%, #fbe380 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#2c9fc4), color-stop(45%,#00b9a2), color-stop(100%,#fbe380)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c9fc4', endColorstr='#fbe380',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    padding: 1px 0 0 0;
+}
+#about-map {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    background: rgba(255,255,255,0.9);
+    z-index: 1000;
+    padding: 0 10px 0 10px;
+}
+#about-map h1 {
+    font-size: 3em;
+    color: #2c9fc4;
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+#about-map p {
+    font-size: 1.5em;
+    color: #5EC996;
+    margin: 0 0 20px 0;
+    text-align: center;
 }
 #map {
-    padding-top: 20px;    
+    padding-top: 20px;
 }
 #map circle {
     cursor: pointer;
+}
+.container.tweets #map {
+    width: 70%;
+    float:right;
 }
 #button-stats-loader {
     display: none;
@@ -39,17 +68,26 @@
     position: absolute;
     left: 50%;
     background: #ffffff;
-    border: 1px solid #000000;
+    border: 1px solid #2c9fc4;
     padding: 5px 8px 5px 8px;
-    font-size: 1.8em;
+    font-size: 1.4em;
     font-family: 'Source Sans Pro', arial, sans-serif;
+    font-weight: 200;
     text-align: center;
     cursor: pointer;
-    margin: 40px auto 0 -75px;
+    margin: 40px auto 0 -55px;
+    color: #2c9fc4;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.show-stats-button:hover {
+    background: #2c9fc4;
+    color: #ffffff;
 }
 .tweet-slide {
-    background: #000000;
-    color: #FFFFFF;
+    background: #FFFFFF;
+    color: #2c9fc4;
     width: 250px;
     height: 100%;
     position: absolute;
@@ -57,6 +95,7 @@
     right: 0;
     overflow: hidden;
     font-size: 1.1em;
+    border-left: 1px solid #2c9fc4;
 }  
     .tweet-slide h1 {
         padding: 26px 10px 0 0;
@@ -102,7 +141,7 @@
             }
 
         .tweet-slide .tweet-content p {
-            background: #222222;
+            background: #2c9fc4;
             color: #FFFFFF;
             text-align: justify;
             padding: 20px 10px 20px 10px;
@@ -127,7 +166,6 @@
         .tweet-slide .tweet-timeline p {
             margin: 15px 0 15px 0;
             padding: 0px 10px 0px 10px;
-            color: #CCCCCC;
-            border-right: 3px solid #FFFFFF;
+            border-left: 3px solid #2c9fc4;
             text-align: justify;
         }
