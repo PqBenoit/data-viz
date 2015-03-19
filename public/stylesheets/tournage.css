@@ -93,11 +93,11 @@
 	background: -o-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(-45deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* IE10+ */
 	background: linear-gradient(135deg,  #2c9fc4 0%,#00b9a2 45%,#fbe380 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c9fc4', endColorstr='#fbe380',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-	position: absolute;
-	bottom: 0;
-	width: 100%; 
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c9fc4', endColorstr='#fbe380',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */	
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  -webkit-transition: height 1s ease-in-out;
 }
 
 .li-click {
@@ -111,4 +111,24 @@
 	font-size: 16px;
 	font-weight: 100;
 	margin-top: 5px; 
+}
+
+.li-click span:hover {
+	cursor: pointer;
+}
+
+.adress-click {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 100%;
+	margin: 0 auto;
+	color: #fff;
+}
+
+.adress-item {
+	width: 20%;
+	float: left;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }

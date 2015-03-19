@@ -9,6 +9,7 @@ var Shooting = (function(my, Map, io, $)
 {
 	my.socket = io;
 	var counter = 0;
+	var downbarHeight;
 
 	/**
 	 * Init map with all shootings places
@@ -16,13 +17,20 @@ var Shooting = (function(my, Map, io, $)
 	 */
 	my.setupShootingPlaces = function ()
 	{	
+
+
 		$('.hello').css({
 			paddingLeft: '150px',
 		});
 
 		downbarHeight = $(window).height() - 65 - $('#movies-container').height();
 		$('.down-bar').css({
-			height: downbarHeight - 10 + 'px'
+			height: downbarHeight - 10 + 'px',
+			zIndex: 123
+		});
+		
+		$('.p-padding').css({
+			paddingTop: downbarHeight/2 - $('.p-padding').height() * 2 + 'px'
 		});
 
 		$('path').css({
@@ -73,6 +81,7 @@ var Shooting = (function(my, Map, io, $)
 		my.socket.on('shootingClicked', function(data){
 			console.log(data);
 			$('circle').remove();
+			var adresses = [];
 			for (var i = 0, j = data.length ; i < j ; i++) {
 				var pos = Map.getPixelPosition(Map.rsr, data[i].fields.geo_coordinates.lng, data[i].fields.geo_coordinates.lat);
 				
@@ -83,14 +92,19 @@ var Shooting = (function(my, Map, io, $)
 				circle.attr('fill', color[randColor]);
 				circle.attr('stroke', 'none');
 				circle.attr('index', i);
+
+				adresses.push(data[i].fields.lieu + ' ' + data[i].fields.adresse);
 			}
 
 			$('circle').click(function(){
 				console.log($(this));
 			});
+
+			setTimeout(function(){
+				my.openLi(data[0].fields.titre, $('circle').length, adresses);
+			}, 500);
+
 			console.log('new shootings placed');
-
-
 		});
 	};
 
@@ -100,13 +114,20 @@ var Shooting = (function(my, Map, io, $)
 	 * @param count
 	 * @return void
 	 */
-	my.openLi = function(title, count)
-	{	
+	my.openLi = function(title, count, adresses)
+	{
 		if(count){
 			$('.down-bar').empty();
+
+			var ad = '';
+			for(var i = 0; i < adresses.length; i++){
+				var ad = ad + '<div class=\'adress-item\'><p>' + adresses[i] + '</p></div>';
+			}
 			
-			var div = '<div class=\'li-click\'><h2>' + title + '</h2><p>' + count + ' lieux de tournage</p></div>'
+			var div = '<div class=\'li-click\'><h2>' + title + '</h2><p>' + count + ' lieux de tournage</p><span> + </span></div>'
+			var divAdress = '<div class=\'adress-click\'>' + ad + '<div class=\'clear\'></div></div>'
 			$('.down-bar').append(div);
+			$('.down-bar').append(divAdress);
 			
 			var marginTop = ($('.down-bar').height() / 2) - ($('.li-click').height()/2);
 			$('.li-click').css({
@@ -122,9 +143,29 @@ var Shooting = (function(my, Map, io, $)
 			var marginTop = ($('.down-bar').height() / 2) - ($('.li-click').height()/2);
 			$('.li-click').css({
 				marginTop: marginTop
-			});	
+			});
 		}
 
+		$('.li-click').find('span').click(function(){
+			if(!($(this).hasClass('span-active'))){
+				$(this).addClass('span-active');
+				setTimeout(function(){
+					$('.li-click').find('span').html('-');
+					$('.down-bar').css({
+						height: $('.down-bar').height() + $('.adress-click').height() + 100 + 'px'
+					});
+				}, 200);
+			} else {
+				console.log($('.li-click').height());
+				$(this).removeClass('span-active');
+				setTimeout(function(){
+					$('.li-click').find('span').html('+');
+					$('.down-bar').css({
+						height: downbarHeight + 'px'
+					});
+				}, 200);
+			}
+		});
 	}
 
 	/**
@@ -137,13 +178,8 @@ var Shooting = (function(my, Map, io, $)
 
 		$('.list-item').click(function(){
 			$('#map').removeClass('rotated');
-			
 			var title = $(this).html();
 			my.socket.emit('titleClicked', {title: title});
-			
-			setTimeout(function(){
-				my.openLi(title, $('circle').length);
-			}, 500);
 		});
 
 	}
