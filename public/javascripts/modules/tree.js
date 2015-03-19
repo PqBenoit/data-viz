@@ -2,11 +2,19 @@ var Tree = (function(my){
   my.filteredTrees = [];
   my.minRanges = [0,10,100,1000,5000];
   my.maxRanges = [10,100,1000,5000,100000];
-
+  my.canvasRatio = [3.4, 5, 6.4, 7.65, 8.65];
   my.changeIndex = true;
 
   my.init = function(){
     console.log('Init Tree module');
+
+    $('canvas').each(function(index, el) {
+      var maxHeightCanvas = ($(window).height()*0.85 < $(window).width()*0,85) ? $(window).height()*0.85 : $(window).height()*0.85;
+      var index = $(el).data('index');
+      var newSize = (my.canvasRatio[index-1] * maxHeightCanvas) / my.canvasRatio[4];
+      $(el).attr('height', newSize);
+      $(el).attr('width', newSize);
+    });
 
     $('canvas').each(function(index, el) {
       var margin = {
