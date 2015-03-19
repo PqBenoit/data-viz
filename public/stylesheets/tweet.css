@@ -25,12 +25,25 @@
 }
 #about-map {
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 0;
     width: 20%;
-    border-right: 1px solid #2c9fc4;
     height: 100%;
-    background: #ffffff;
+    background: rgba(255,255,255,0.9);
+    z-index: 1000;
+    padding: 0 10px 0 10px;
+}
+#about-map h1 {
+    font-size: 3em;
+    color: #2c9fc4;
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+#about-map p {
+    font-size: 1.5em;
+    color: #5EC996;
+    margin: 0 0 20px 0;
+    text-align: center;
 }
 #map {
     padding-top: 20px;
