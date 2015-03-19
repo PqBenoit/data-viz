@@ -41,6 +41,9 @@
   left: 10px;
   color: white;
 }
+.tree #message.black {
+	color: black;
+}
 .tree .loader {
 	position: relative;
 	font-size: 16px;

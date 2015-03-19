@@ -41,8 +41,10 @@ var Tree = (function(my){
 
       if(value==0){
         $('.screen').addClass('showAll');
+        $('#message').removeClass('black');
         $('#message').text('Toute la forêt parisienne');
       } else {
+        $('#message').addClass('black');
         $('.screen').removeClass('showAll');
         $('#myChart'+value).addClass('show');
       }
