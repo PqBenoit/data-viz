@@ -26,7 +26,10 @@ var Tree = (function(my){
         var maxRange = my.maxRanges[i];
         my.filteredTrees[i] = filterByRange(trees, minRange, maxRange);
       }
-      my.draw();
+      $('.loader').addClass('fadeOutUp');
+      setTimeout(function(){
+        my.draw();
+      }, 300);
     });
     my.initRangeInput();
   };

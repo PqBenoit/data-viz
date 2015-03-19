@@ -2,11 +2,19 @@ extends ../layout
 
 block content
   <link href='http://fonts.googleapis.com/css?family=Nova+Mono' rel='stylesheet' type='text/css'>
+  <link href='stylesheets/lib/animate.css' rel='stylesheet' type='text/css'>
   div.tree-container
     div.blurred
     div.tree
       p(id="message") Toute la forêt parisienne
       input(id="rangeSelector" type="range" value="0" max="5" min="0" step="1")
+      div.loader.animated.
+        Paris possède une étonnante diversité arboricole. Plus de 150 espèces et 90 000 abres sont référencés parmis les bases de données parisiennes.<br>
+        Explorez cette petite forêt qui vit au coeur de notre capitale. <br><br>
+
+        Chaque cercle représente les espèces selon leur nombre de réprésentant. Mettez en un en valeur à l'aide du sélecteur en haut de l'écran. Survolez ensuite le cercle pour obtenir plus d'informations sur les différentes espèces de cet intervalle.
+        <br><br>
+        Prenez le temps de découvrir l'armée d'érable ainsi que les arbres uniques de Paris.
       div.screen.showAll
       <canvas id="myChart5" width="865" height="865" data-index="5"></canvas>
       <canvas id="myChart4" width="765" height="765" data-index="4"></canvas>
